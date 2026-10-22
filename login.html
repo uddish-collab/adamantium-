@@ -1,0 +1,323 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In | Adamantium</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: #0b0c0f;
+      color: #f3f0e8;
+      font-family: Inter, sans-serif;
+    }
+
+    .panel {
+      width: 100%;
+      max-width: 430px;
+      padding: 32px;
+      border: 1px solid #35332d;
+      border-radius: 12px;
+      background: #121316;
+    }
+
+    .brand {
+      color: #bda477;
+      font: 800 36px "Barlow Condensed", sans-serif;
+      letter-spacing: 2px;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 8px 0;
+      text-align: center;
+      font: 700 30px "Barlow Condensed", sans-serif;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #a7a7a3;
+      font-size: 13px;
+      margin-bottom: 26px;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+
+    button, input { font: inherit; }
+
+    .tab, .submit {
+      padding: 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .tab {
+      color: #d0cec7;
+      background: #1b1c20;
+      border: 1px solid #38383a;
+    }
+
+    .tab.active, .submit {
+      background: #bda477;
+      color: #111;
+      border: 1px solid #bda477;
+      font-weight: 700;
+    }
+
+    label {
+      display: block;
+      margin: 16px 0 7px;
+      color: #d9d5ca;
+      font-size: 13px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      color: #f3f0e8;
+      background: #0b0c0f;
+      border: 1px solid #3a3a3d;
+      border-radius: 6px;
+      outline: none;
+    }
+
+    input:focus { border-color: #bda477; }
+
+    .submit {
+      width: 100%;
+      margin-top: 22px;
+    }
+
+    .submit:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    #message {
+      display: none;
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    #message.show { display: block; }
+    #message.error { background: #351d20; color: #ffcccc; }
+    #message.success { background: #1b3025; color: #c8f2d6; }
+
+    .back {
+      display: block;
+      margin-top: 22px;
+      text-align: center;
+      color: #bda477;
+      text-decoration: none;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="panel">
+    <div class="brand">ADAMANTIUM</div>
+    <h1 id="heading">Welcome Back</h1>
+    <p class="subtitle">Sign in to join the battle.</p>
+
+    <div class="tabs">
+      <button class="tab active" id="signInTab" type="button">Sign In</button>
+      <button class="tab" id="signUpTab" type="button">Create Account</button>
+    </div>
+
+    <form id="authForm">
+      <label for="email">Email</label>
+      <input id="email" type="email" autocomplete="email" required>
+
+      <label for="password">Password</label>
+      <input id="password" type="password" autocomplete="current-password" minlength="6" required>
+
+      <button class="submit" id="submitButton" type="submit">Sign In</button>
+    </form>
+
+    <div id="message" role="status" aria-live="polite"></div>
+    <a class="back" href="tanks.html">← Back to Ground Forces</a>
+  </main>
+
+  <script>
+    // Copy these two values from the existing configuration in tanks.html.
+    const SUPABASE_URL = "https://wxxqsoumrdfbuosowyki.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_2pdiD1MUA5SrOCKI8LoQgQ_T7ouSuQy";
+
+    const db = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
+
+    const form = document.getElementById("authForm");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const submitButton = document.getElementById("submitButton");
+    const message = document.getElementById("message");
+    const heading = document.getElementById("heading");
+    const signInTab = document.getElementById("signInTab");
+    const signUpTab = document.getElementById("signUpTab");
+
+    let mode = "signin";
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = "show " + type;
+    }
+
+    function setMode(nextMode) {
+      mode = nextMode;
+      const signingIn = mode === "signin";
+
+      heading.textContent = signingIn ? "Welcome Back" : "Join Adamantium";
+      submitButton.textContent = signingIn ? "Sign In" : "Create Account";
+      passwordInput.autocomplete = signingIn ? "current-password" : "new-password";
+
+      signInTab.classList.toggle("active", signingIn);
+      signUpTab.classList.toggle("active", !signingIn);
+
+      message.className = "";
+      message.textContent = "";
+    }
+
+    signInTab.addEventListener("click", () => setMode("signin"));
+    signUpTab.addEventListener("click", () => setMode("signup"));
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      submitButton.disabled = true;
+      message.className = "";
+      submitButton.textContent = mode === "signin"
+        ? "Signing in..."
+        : "Creating account...";
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      try {
+        if (mode === "signin") {
+          const { error } = await db.auth.signInWithPassword({
+            email,
+            password
+          });
+
+          if (error) throw error;
+
+          window.location.href = "tanks.html";
+          return;
+        }
+
+        const { data, error } = await db.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: window.location.origin +
+              window.location.pathname.replace(/[^/]*$/, "tanks.html")
+          }
+        });
+
+        if (error) throw error;
+
+        if (data.session) {
+          showMessage("Account created! Taking you to Ground Forces...", "success");
+          window.location.href = "tanks.html";
+          return;
+        }
+
+        showMessage(
+          "Account request received. Check your email for a confirmation link, then return here and sign in.",
+          "success"
+        );
+      } catch (error) {
+        showMessage(error.message || "Authentication failed. Please try again.", "error");
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = mode === "signin"
+          ? "Sign In"
+          : "Create Account";
+      }
+    });
+
+    // If a session already exists, go straight to Ground Forces.
+    db.auth.getSession().then(({ data, error }) => {
+      if (!error && data.session) {
+        window.location.href = "tanks.html";
+      }
+    });
+
+
+
+
+
+
+/* ===== TANK SHOWCASE AUTO SLIDESHOW ===== */
+(() => {
+  function initTankSlideshow() {
+    const root = document.querySelector(".tank-showcase");
+    if (!root || root.dataset.slideshowReady === "true") return;
+
+    const slides = [...root.querySelectorAll(".tank-slide")];
+    if (slides.length < 2) return;
+
+    let index = slides.findIndex(slide =>
+      slide.classList.contains("is-active")
+    );
+    if (index < 0) index = 0;
+
+    function showSlide(nextIndex) {
+      index = nextIndex % slides.length;
+
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("is-active", i === index);
+        slide.setAttribute("aria-hidden", String(i !== index));
+      });
+    }
+
+    root.dataset.slideshowReady = "true";
+    showSlide(index);
+
+    setInterval(() => {
+      showSlide(index + 1);
+    }, 4000);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initTankSlideshow);
+  } else {
+    initTankSlideshow();
+  }
+})();
+
+
+
+
+
+
+  </script>
+</body>
+</html>

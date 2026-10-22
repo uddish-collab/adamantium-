@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0c0f">
+  <title>Ground Forces | Adamantium</title>
+  <meta name="description" content="Explore ground vehicles, tactical guides, and tank community rooms on Adamantium.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Tanks page additions. Homepage stylesheet remains in use. */
+    :root {
+      --tank-bg: #0b0c0f;
+      --tank-panel: #121419;
+      --tank-border: rgba(255,255,255,.11);
+      --tank-gold: #bda477;
+      --tank-muted: #a4a7ad;
+      --tank-white: #f4f1e9;
+    }
+
+    body {
+      background: var(--tank-bg);
+      color: var(--tank-white);
+    }
+
+    .tank-page {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .tank-topbar {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 16px clamp(20px, 5vw, 76px);
+      border-bottom: 1px solid var(--tank-border);
+      background: #0b0c0f;
+    }
+
+    .tank-brand {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 1.7px;
+  white-space: nowrap;
+  color: #f0ede5;
+  text-decoration: none;
+}
+
+.tank-brand span {
+  color: #bda477;
+}
+    .tank-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .tank-nav a {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #c6c7ca;
+      text-decoration: none;
+    }
+
+    .tank-nav a:hover,
+    .tank-nav a.active {
+      color: var(--tank-gold);
+    }
+
+    .tank-hero {
+      min-height: 470px;
+      display: flex;
+      align-items: flex-end;
+      position: relative;
+      background-color: #202326;
+      background-image:
+        linear-gradient(90deg, rgba(7,8,10,.94) 0%, rgba(7,8,10,.63) 47%, rgba(7,8,10,.12) 100%),
+        linear-gradient(0deg, rgba(7,8,10,.85), transparent 65%),
+        url("https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=2200&q=85");
+      background-position: center;
+      background-size: cover;
+      border-bottom: 1px solid var(--tank-border);
+    }
+
+    .tank-hero-inner {
+      width: min(1180px, 100%);
+      margin: auto;
+      padding: 72px 28px 64px;
+      position: relative;
+    }
+
+    .tank-eyebrow {
+      color: var(--tank-gold);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin: 0 0 15px;
+    }
+
+    .tank-hero h1 {
+      font: 800 clamp(48px, 8vw, 88px)/.94 "Barlow Condensed", sans-serif;
+      text-transform: uppercase;
+      max-width: 720px;
+      margin: 0;
+      letter-spacing: .5px;
+    }
+
+    .tank-hero p:not(.tank-eyebrow) {
+      color: #d0d0d0;
+      line-height: 1.8;
+      max-width: 540px;
+      font-size: 14px;
+      margin: 22px 0 26px;
+    }
+
+    .tank-button {
+      appearance: none;
+      border: 1px solid var(--tank-gold);
+      background: var(--tank-gold);
+      color: #111;
+      min-height: 42px;
+      padding: 11px 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font: 700 11px Inter, sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .tank-button:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .tank-button.secondary {
+      color: var(--tank-white);
+      background: transparent;
+      border-color: var(--tank-border);
+    }
+
+    .tank-button:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .tank-container {
+      width: min(1180px, 100%);
+      margin: auto;
+      padding: 0 28px;
+    }
+
+    .tank-section {
+      padding: 66px 0;
+      border-bottom: 1px solid var(--tank-border);
+      scroll-margin-top: 24px;
+    }
+
+    .tank-section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .tank-section-heading h2 {
+      font: 700 clamp(30px, 4vw, 44px)/1 "Barlow Condensed", sans-serif;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .tank-section-heading p {
+      color: var(--tank-muted);
+      font-size: 13px;
+      line-height: 1.7;
+      margin: 10px 0 0;
+    }
+
+    .tank-kicker {
+      color: var(--tank-gold);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .tank-panel {
+      background: var(--tank-panel);
+      border: 1px solid var(--tank-border);
+      padding: 22px;
+      min-width: 0;
+    }
+
+    .tank-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .tank-two-col {
+      display: grid;
+      grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .tank-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tank-field label {
+      color: #c4c5c9;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .7px;
+      text-transform: uppercase;
+    }
+
+    .tank-field input,
+    .tank-field select,
+    .tank-field textarea,
+    .tank-toolbar input,
+    .tank-toolbar select {
+      width: 100%;
+      min-width: 0;
+      padding: 12px 13px;
+      color: var(--tank-white);
+      background: #0c0e12;
+      border: 1px solid #30333a;
+      border-radius: 0;
+      font: 13px Inter, sans-serif;
+      outline: none;
+    }
+
+    .tank-field input:focus,
+    .tank-field select:focus,
+    .tank-field textarea:focus,
+    .tank-toolbar input:focus,
+    .tank-toolbar select:focus {
+      border-color: var(--tank-gold);
+    }
+
+    .tank-field select option,
+    .tank-toolbar select option {
+      background: #121419;
+    }
+
+    .tank-toolbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 200px;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .tank-card {
+      padding: 20px;
+      background: var(--tank-panel);
+      border: 1px solid var(--tank-border);
+      min-width: 0;
+    }
+
+    .tank-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .tank-tag {
+      color: var(--tank-gold);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+
+    .tank-card h3 {
+      font: 600 24px/1.1 "Barlow Condensed", sans-serif;
+      margin: 0 0 10px;
+      overflow-wrap: anywhere;
+    }
+
+    .tank-card p {
+      color: var(--tank-muted);
+      font-size: 12px;
+      line-height: 1.8;
+      margin: 0 0 18px;
+      overflow-wrap: anywhere;
+    }
+
+    .tank-card-footer {
+      border-top: 1px solid var(--tank-border);
+      padding-top: 14px;
+      color: #8e929a;
+      font-size: 10px;
+      letter-spacing: .5px;
+      overflow-wrap: anywhere;
+    }
+
+    .tank-room-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .tank-room {
+      background: var(--tank-panel);
+      border: 1px solid var(--tank-border);
+      padding: 19px;
+    }
+
+    .tank-room-main {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+    }
+
+    .tank-room h3 {
+      font: 600 24px "Barlow Condensed", sans-serif;
+      margin: 8px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .tank-room-meta {
+      color: var(--tank-muted);
+      font-size: 11px;
+      line-height: 1.9;
+    }
+
+    .tank-room-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .tank-pill {
+      display: inline-block;
+      padding: 5px 8px;
+      border: 1px solid var(--tank-border);
+      color: #c7c8cc;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .tank-pill.gold {
+      border-color: rgba(189,164,119,.5);
+      color: var(--tank-gold);
+    }
+
+    .tank-status {
+      min-height: 18px;
+      margin: 12px 0 0;
+      color: var(--tank-muted);
+      font-size: 12px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+
+    .tank-status.error {
+      color: #ff9c9c;
+    }
+
+    .tank-status.success {
+      color: #a6d9b0;
+    }
+
+    .tank-empty {
+      border: 1px dashed #383a40;
+      padding: 25px;
+      color: var(--tank-muted);
+      font-size: 13px;
+      line-height: 1.8;
+      grid-column: 1 / -1;
+    }
+
+    .tank-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--tank-border);
+    }
+
+    .tank-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 500px;
+      font-size: 12px;
+      text-align: left;
+    }
+
+    .tank-table th {
+      background: #17191e;
+      color: var(--tank-gold);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .tank-table th,
+    .tank-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--tank-border);
+    }
+
+    .tank-table td {
+      color: #dedfe2;
+    }
+
+    .tank-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .tank-table td:first-child {
+      font-weight: 600;
+    }
+
+    .tank-footer {
+      padding: 28px;
+      text-align: center;
+      color: #777b83;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .tank-footer a {
+      color: var(--tank-gold);
+      text-decoration: none;
+    }
+
+    .tank-loading {
+      color: var(--tank-muted);
+      font-size: 12px;
+      padding: 12px 0;
+    }
+
+    @media (max-width: 800px) {
+      .tank-two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .tank-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .tank-hero {
+        min-height: 430px;
+        background-position: 58% center;
+      }
+
+      .tank-nav {
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .tank-topbar {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .tank-nav {
+        gap: 15px;
+      }
+
+      .tank-container {
+        padding: 0 18px;
+      }
+
+      .tank-hero-inner {
+        padding: 55px 20px 44px;
+      }
+
+      .tank-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tank-toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .tank-section {
+        padding: 46px 0;
+      }
+
+      .tank-section-heading,
+      .tank-room-main {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+/* ===== ADAMANTIUM TANK SHOWCASE ===== */
+.tank-showcase {
+  position: relative;
+  overflow: hidden;
+  background: #101216;
+  border: 1px solid var(--tank-border);
+}
+
+.tank-showcase-track {
+  position: relative;
+  min-height: 480px;
+}
+
+.tank-slide {
+  position: absolute;
+  inset: 0;
+  min-height: 480px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(22px);
+  transition:
+    opacity .65s ease,
+    transform .65s ease,
+    visibility .65s;
+}
+
+.tank-slide.is-active {
+  position: relative;
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.tank-slide img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.tank-slide-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(7,8,10,.94), rgba(7,8,10,.45) 58%, rgba(7,8,10,.08)),
+    linear-gradient(0deg, rgba(7,8,10,.82), transparent 65%);
+}
+
+.tank-slide-info {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  min-height: 480px;
+  max-width: 650px;
+  padding: clamp(25px, 5vw, 58px);
+}
+
+.tank-slide-info h3 {
+  margin: 8px 0 12px;
+  color: var(--tank-white);
+  font: 800 clamp(48px, 8vw, 82px)/.95
+        "Barlow Condensed", sans-serif;
+  text-transform: uppercase;
+}
+
+.tank-slide-info p {
+  max-width: 430px;
+  margin: 0 0 24px;
+  color: #d0d0d0;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.tank-slide-number {
+  color: var(--tank-gold);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.tank-showcase-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 20px;
+  background: #111318;
+  border-top: 1px solid var(--tank-border);
+}
+
+.tank-showcase-arrow {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  color: var(--tank-gold);
+  background: transparent;
+  border: 1px solid #45403a;
+  cursor: pointer;
+  font-size: 22px;
+  transition: background .2s ease, color .2s ease;
+}
+
+.tank-showcase-arrow:hover {
+  color: #101010;
+  background: var(--tank-gold);
+}
+
+.tank-showcase-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.tank-showcase-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #555860;
+  cursor: pointer;
+  transition: background .25s ease, transform .25s ease;
+}
+
+.tank-showcase-dot.is-active {
+  background: var(--tank-gold);
+  transform: scale(1.35);
+}
+
+.tank-showcase button:focus-visible {
+  outline: 2px solid var(--tank-gold);
+  outline-offset: 4px;
+}
+
+@media (max-width: 600px) {
+  .tank-showcase-track,
+  .tank-slide,
+  .tank-slide img,
+  .tank-slide-info {
+    min-height: 390px;
+  }
+
+  .tank-slide-info {
+    padding: 25px 20px;
+  }
+
+  .tank-showcase-controls {
+    padding: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tank-slide,
+  .tank-showcase-arrow,
+  .tank-showcase-dot {
+    transition: none;
+  }
+}
+
+  </style>
+</head>
+
+<body data-mode="tanks">
+<div class="tank-page">
+
+  <header class="tank-topbar">
+    <a class="tank-brand" href="index.html">ADA<span>MANTIUM</span></a>
+
+    <nav class="tank-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="#vehicles">Tanks</a>
+      <a href="#rooms" class="active">Rooms</a>
+      <a href="#guides">Guides</a>
+    </nav>
+
+    <span class="tank-pill gold" id="auth-indicator">Checking session</span>
+  </header>
+
+  <!-- STATIC IMAGE HERO: no video element on this page -->
+  <section class="tank-hero">
+    <div class="tank-hero-inner">
+      <p class="tank-eyebrow">Adamantium / Ground Forces</p>
+      <h1>Own the<br>Battlefield.</h1>
+      <p>
+        Explore the ground vehicle database, build your crew,
+        challenge other rooms, and study the tactics that win battles.
+      </p>
+      <a class="tank-button" href="#rooms">Enter Room Lobby &rarr;</a>
+    </div>
+  </section>
+
+  <main class="tank-container">
+
+    <section class="tank-section" id="rooms">
+      <div class="tank-section-heading">
+        <div>
+          <div class="tank-kicker">Community / Ground Forces</div>
+          <h2>Room Lobby</h2>
+          <p>Create a room, request to join another crew, and open its scoreboard.</p>
+        </div>
+        <span class="tank-pill gold">Supabase Connected</span>
+      </div>
+
+      <div class="tank-two-col">
+        <div class="tank-panel">
+          <div class="tank-kicker">Your squad</div>
+          <h3 style="font:600 27px 'Barlow Condensed',sans-serif;margin:0 0 20px">
+            Create a room
+          </h3>
+
+          <form id="create-room-form">
+            <div class="tank-field">
+              <label for="room-name">Room name</label>
+              <input id="room-name" maxlength="60" required
+                placeholder="e.g. Steel Division">
+            </div>
+
+            <div class="tank-field">
+              <label for="room-mode">Battle format</label>
+              <select id="room-mode">
+                <option>Realistic Battles</option>
+                <option>Arcade Battles</option>
+                <option>Squad Training</option>
+                <option>Friendly Match</option>
+              </select>
+            </div>
+
+            <div class="tank-field">
+              <label for="team-size">Team size</label>
+              <select id="team-size">
+                <option value="2">2 players</option>
+                <option value="4" selected>4 players</option>
+                <option value="6">6 players</option>
+                <option value="8">8 players</option>
+                <option value="12">12 players</option>
+                <option value="16">16 players</option>
+              </select>
+            </div>
+
+            <button class="tank-button" type="submit" id="create-room-button">
+              Create Room
+            </button>
+            <p class="tank-status" id="create-room-status" role="status"></p>
+          </form>
+        </div>
+
+        <div>
+          <div class="tank-panel" style="margin-bottom:18px">
+            <div class="tank-kicker">Available crews</div>
+            <h3 style="font:600 27px 'Barlow Condensed',sans-serif;margin:0 0 8px">
+              Find a room
+            </h3>
+            <p style="color:var(--tank-muted);font-size:12px;line-height:1.8;margin:0">
+              Open rooms are loaded from your Supabase database. Send a join
+              request and wait for the room owner to respond.
+            </p>
+            <button class="tank-button secondary" id="refresh-rooms" type="button"
+              style="margin-top:17px">Refresh Rooms</button>
+            <p class="tank-status" id="rooms-status" role="status"></p>
+          </div>
+
+          <div class="tank-room-list" id="room-list">
+            <div class="tank-empty">Loading rooms…</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tank-section" id="requests">
+      <div class="tank-section-heading">
+        <div>
+          <div class="tank-kicker">Squad management</div>
+          <h2>Join Requests</h2>
+          <p>Your outgoing requests and requests awaiting your decision.</p>
+        </div>
+      </div>
+      <div id="request-list" class="tank-room-list">
+        <div class="tank-empty">Loading requests…</div>
+      </div>
+      <p class="tank-status" id="requests-status" role="status"></p>
+    </section>
+
+    <section class="tank-section" id="scoreboard">
+      <div class="tank-section-heading">
+        <div>
+          <div class="tank-kicker">Room results</div>
+          <h2 id="scoreboard-title">Room Scoreboard</h2>
+          <p>Scores are read from stored database entries. No fabricated scores are shown.</p>
+        </div>
+        <button class="tank-button secondary" id="refresh-scores" type="button" disabled>
+          Refresh Scores
+        </button>
+      </div>
+
+      <div class="tank-table-wrap">
+        <table class="tank-table">
+          <thead>
+            <tr>
+              <th>Player ID</th>
+              <th>Points</th>
+              <th>Kills</th>
+              <th>Deaths</th>
+              <th>Updated</th>
+            </tr>
+          </thead>
+          <tbody id="scoreboard-body">
+            <tr><td colspan="5">Choose a room to view its scoreboard.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tank-status" id="scores-status" role="status"></p>
+    </section>
+
+    <section class="tank-section" id="vehicles">
+      <div class="tank-section-heading">
+        <div>
+          <div class="tank-kicker">Vehicle database</div>
+          <h2>Ground Vehicle Index</h2>
+          <p>Vehicles are loaded from your existing <code>vehicles</code> table.</p>
+        </div>
+      </div>
+
+      <div class="tank-toolbar">
+        <input id="vehicle-search" type="search" placeholder="Search vehicle or nation…"
+          aria-label="Search vehicles">
+        <select id="vehicle-filter" aria-label="Filter nation">
+          <option value="all">All nations</option>
+        </select>
+      </div>
+
+      <div id="vehicle-grid" class="tank-grid">
+        <div class="tank-empty">Loading vehicles…</div>
+      </div>
+      <p class="tank-status" id="vehicles-status" role="status"></p>
+    </section>
+
+    <section class="tank-section" id="guides">
+      <div class="tank-section-heading">
+        <div>
+          <div class="tank-kicker">Knowledge / Tactics</div>
+          <h2>Combat Guides</h2>
+          <p>Community guides loaded from your existing <code>guides</code> table.</p>
+        </div>
+      </div>
+
+      <div id="guide-grid" class="tank-grid">
+        <div class="tank-empty">Loading guides…</div>
+      </div>
+      <p class="tank-status" id="guides-status" role="status"></p>
+    </section>
+
+    <section class="tank-section" id="tank-showcase">
+      <div class="tank-section-heading">
+        <div>
+          <div class="tank-kicker">Legends / Armoured Warfare</div>
+          <h2>Tank Showcase</h2>
+          <p>Iconic machines. Legendary battlefields. Explore the steel.</p>
+        </div>
+        <span class="tank-pill gold">Featured Vehicles</span>
+      </div>
+
+      <div class="tank-showcase" aria-roledescription="carousel"
+           aria-label="Featured tanks">
+        <div class="tank-showcase-track">
+
+          <article class="tank-slide is-active"
+                   aria-hidden="false">
+            <img
+              src="https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=1800&q=85"
+              alt="Armoured military vehicle in a dramatic setting">
+            <div class="tank-slide-shade"></div>
+            <div class="tank-slide-info">
+              <span class="tank-kicker">United States / Main Battle Tank</span>
+              <h3>M1 Abrams</h3>
+              <p>Built for mobility, firepower, and modern armoured combat.</p>
+              <span class="tank-slide-number">01 / 05</span>
+            </div>
+          </article>
+
+          <article class="tank-slide" aria-hidden="true">
+            <img
+              src="https://images.unsplash.com/photo-1563207153-f403bf289096?auto=format&fit=crop&w=1800&q=85"
+              alt="Military armoured vehicle">
+            <div class="tank-slide-shade"></div>
+            <div class="tank-slide-info">
+              <span class="tank-kicker">Germany / Main Battle Tank</span>
+              <h3>Leopard 2</h3>
+              <p>A modern armoured platform known for its balance of mobility and firepower.</p>
+              <span class="tank-slide-number">02 / 05</span>
+            </div>
+          </article>
+
+          <article class="tank-slide" aria-hidden="true">
+            <img
+              src="https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=1800&q=85"
+              alt="Military vehicle in the field">
+            <div class="tank-slide-shade"></div>
+            <div class="tank-slide-info">
+              <span class="tank-kicker">USSR / Main Battle Tank</span>
+              <h3>T-90</h3>
+              <p>A compact design combining a powerful gun with layered protection.</p>
+              <span class="tank-slide-number">03 / 05</span>
+            </div>
+          </article>
+
+          <article class="tank-slide" aria-hidden="true">
+            <img
+              src="https://images.unsplash.com/photo-1541873676-a18131494184?auto=format&fit=crop&w=1800&q=85"
+              alt="Armoured vehicle outdoors">
+            <div class="tank-slide-shade"></div>
+            <div class="tank-slide-info">
+              <span class="tank-kicker">Germany / Heavy Tank</span>
+              <h3>Tiger II</h3>
+              <p>A legendary heavy tank remembered for its imposing gun and armour.</p>
+              <span class="tank-slide-number">04 / 05</span>
+            </div>
+          </article>
+
+          <article class="tank-slide" aria-hidden="true">
+            <img
+              src="https://images.unsplash.com/photo-1508615070457-7baeba4003ab?auto=format&fit=crop&w=1800&q=85"
+              alt="Military scene outdoors">
+            <div class="tank-slide-shade"></div>
+            <div class="tank-slide-info">
+              <span class="tank-kicker">United Kingdom / Main Battle Tank</span>
+              <h3>Challenger 2</h3>
+              <p>A heavily protected modern tank designed for demanding battlefields.</p>
+              <span class="tank-slide-number">05 / 05</span>
+            </div>
+          </article>
+
+        </div>
+
+        
+        
+      </div>
+      <p class="tank-status" id="tank-showcase-status" aria-live="polite"></p>
+    </section>
+
+  </main>
+
+  <footer class="tank-footer">
+    <a href="index.html">Adamantium</a> &nbsp; / &nbsp; Ground Forces
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+"use strict";
+
+/*
+  REQUIRED CONFIGURATION:
+  Use your Supabase Project URL and public publishable/anon key.
+  Never put a service-role key in browser code.
+*/
+const SUPABASE_URL = "https://wxxqsoumrdfbuosowyki.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_2pdiD1MUA5SrOCKI8LoQgQ_T7ouSuQy";
+
+const dbReady =
+  SUPABASE_URL.startsWith("https://") &&
+  !SUPABASE_URL.includes("YOUR_SUPABASE") &&
+  SUPABASE_ANON_KEY.length > 20 &&
+  !SUPABASE_ANON_KEY.includes("YOUR_SUPABASE");
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+let currentUser = null;
+let selectedRoomId = null;
+let roomsCache = [];
+let requestsCache = [];
+
+const $ = (selector) => document.querySelector(selector);
+
+function setStatus(selector, message, kind = "") {
+  const element = $(selector);
+  if (!element) return;
+  element.textContent = message;
+  element.className = "tank-status" + (kind ? " " + kind : "");
+}
+
+function makeElement(tag, className, text) {
+  const element = document.createElement(tag);
+  if (className) element.className = className;
+  if (text !== undefined) element.textContent = text;
+  return element;
+}
+
+function showEmpty(container, message) {
+  container.replaceChildren(makeElement("div", "tank-empty", message));
+}
+
+function shortId(value) {
+  return value ? value.slice(0, 8) + "…" : "Unknown";
+}
+
+function canUseRooms() {
+  if (!db) {
+    setStatus("#rooms-status",
+      "Add your Supabase URL and public anon/publishable key in this file first.",
+      "error");
+    return false;
+  }
+  if (!currentUser) {
+    setStatus("#rooms-status",
+      "Sign in through your existing Adamantium authentication flow to create rooms or send requests.",
+      "error");
+    return false;
+  }
+  return true;
+}
+
+function addRoomButton(container, label, handler, secondary = false) {
+  const button = makeElement(
+    "button",
+    "tank-button" + (secondary ? " secondary" : ""),
+    label
+  );
+  button.type = "button";
+  button.addEventListener("click", handler);
+  container.appendChild(button);
+  return button;
+}
+
+async function loadSession() {
+  if (!db) {
+    $("#auth-indicator").textContent = "Setup Required";
+    setStatus("#create-room-status",
+      "Configure Supabase URL and public key to enable database features.", "error");
+    setStatus("#vehicles-status", "Supabase configuration is missing.", "error");
+    setStatus("#guides-status", "Supabase configuration is missing.", "error");
+    showEmpty($("#room-list"), "Configure Supabase to load real rooms.");
+    showEmpty($("#request-list"), "Configure Supabase to load join requests.");
+    showEmpty($("#vehicle-grid"), "Configure Supabase to load vehicles.");
+    showEmpty($("#guide-grid"), "Configure Supabase to load guides.");
+    return;
+  }
+
+  try {
+    const { data, error } = await db.auth.getSession();
+    if (error) throw error;
+
+    currentUser = data.session?.user ?? null;
+    updateAuthLabel();
+
+    db.auth.onAuthStateChange((_event, session) => {
+      currentUser = session?.user ?? null;
+      updateAuthLabel();
+      loadRooms();
+      loadRequests();
+    });
+
+    await Promise.all([
+      loadVehicles(),
+      loadGuides(),
+      loadRooms(),
+      loadRequests()
+    ]);
+  } catch (error) {
+    $("#auth-indicator").textContent = "Session Error";
+    setStatus("#rooms-status", error.message, "error");
+  }
+}
+
+function updateAuthLabel() {
+  $("#auth-indicator").textContent = currentUser
+    ? "Signed In"
+    : "Sign In Required";
+}
+
+async function loadVehicles() {
+  const grid = $("#vehicle-grid");
+  grid.replaceChildren(makeElement("div", "tank-empty", "Loading vehicles…"));
+
+  const { data, error } = await db
+    .from("vehicles")
+    .select("id, name, nation")
+    .order("name", { ascending: true });
+
+  if (error) {
+    showEmpty(grid, "Could not load vehicles.");
+    setStatus("#vehicles-status", error.message, "error");
+    return;
+  }
+
+  const vehicles = data ?? [];
+  const nations = [...new Set(
+    vehicles.map(v => v.nation).filter(Boolean)
+  )].sort();
+
+  const filter = $("#vehicle-filter");
+  filter.replaceChildren(new Option("All nations", "all"));
+  nations.forEach(nation => filter.add(new Option(nation, nation)));
+
+  function renderVehicles() {
+    const term = $("#vehicle-search").value.trim().toLowerCase();
+    const nation = filter.value;
+
+    const matches = vehicles.filter(vehicle => {
+      const name = (vehicle.name ?? "").toLowerCase();
+      const country = (vehicle.nation ?? "").toLowerCase();
+      return (nation === "all" || vehicle.nation === nation) &&
+        (name.includes(term) || country.includes(term));
+    });
+
+    grid.replaceChildren();
+
+    if (!matches.length) {
+      showEmpty(grid, vehicles.length
+        ? "No vehicles match that search."
+        : "Your vehicles table is empty. Add vehicle records in Supabase.");
+      return;
+    }
+
+    matches.forEach(vehicle => {
+      const card = makeElement("article", "tank-card");
+      const top = makeElement("div", "tank-card-top");
+      top.append(
+        makeElement("span", "tank-tag", "GROUND VEHICLE"),
+        makeElement("span", "tank-pill", "ID " + vehicle.id)
+      );
+      card.append(
+        top,
+        makeElement("h3", "", vehicle.name || "Unnamed vehicle"),
+        makeElement("p", "", vehicle.nation || "Nation not specified"),
+        makeElement("div", "tank-card-footer", "DATABASE RECORD")
+      );
+      grid.appendChild(card);
+    });
+  }
+
+  $("#vehicle-search").addEventListener("input", renderVehicles);
+  filter.addEventListener("change", renderVehicles);
+  renderVehicles();
+
+  setStatus("#vehicles-status", vehicles.length + " database records loaded.");
+}
+
+
+function renderGuideContent(content) {
+  const body = document.createElement("div");
+  body.className = "tank-guide-content";
+
+  // Split the stored content into recognised HTML tags and text.
+  const parts = (content || "").split(
+    /(<\/?h2>|<\/?strong>|<\/?p>)/gi
+  );
+
+  let current = body;
+  let paragraph = null;
+  let heading = null;
+  let bold = false;
+
+  parts.forEach(part => {
+    const tag = part.toLowerCase();
+
+    if (tag === "<h2>") {
+      heading = document.createElement("h4");
+      current = heading;
+    } else if (tag === "</h2>") {
+      if (heading) body.appendChild(heading);
+      heading = null;
+      current = body;
+    } else if (tag === "<p>") {
+      paragraph = document.createElement("p");
+      current = paragraph;
+    } else if (tag === "</p>") {
+      if (paragraph) body.appendChild(paragraph);
+      paragraph = null;
+      current = body;
+    } else if (tag === "<strong>") {
+      bold = true;
+    } else if (tag === "</strong>") {
+      bold = false;
+    } else if (part) {
+      const text = document.createTextNode(part);
+      if (bold) {
+        const strong = document.createElement("strong");
+        strong.appendChild(text);
+        current.appendChild(strong);
+      } else {
+        current.appendChild(text);
+      }
+    }
+  });
+
+  if (heading) body.appendChild(heading);
+  if (paragraph) body.appendChild(paragraph);
+
+  // If no recognised tags were present, show the content as plain text.
+  if (!body.childNodes.length && content) {
+    body.textContent = content;
+  }
+
+  return body;
+}
+
+async function loadGuides() {
+  const grid = $("#guide-grid");
+  grid.replaceChildren(
+    makeElement("div", "tank-empty", "Loading guides…")
+  );
+
+  const { data, error } = await db
+    .from("guides")
+    .select("id, title, content, author_id")
+    .order("id", { ascending: false });
+
+  if (error) {
+    showEmpty(grid, "Could not load guides.");
+    setStatus("#guides-status", error.message, "error");
+    return;
+  }
+
+  grid.replaceChildren();
+
+  if (!data?.length) {
+    showEmpty(grid, "No guides have been published yet.");
+    setStatus(
+      "#guides-status",
+      "Add guides to the guides table in Supabase."
+    );
+    return;
+  }
+
+  data.forEach(guide => {
+    const card = makeElement("article", "tank-card");
+
+    card.append(
+      makeElement("div", "tank-kicker", "FIELD MANUAL"),
+      makeElement("h3", "", guide.title || "Untitled guide"),
+      renderGuideContent(guide.content),
+      makeElement(
+        "div",
+        "tank-card-footer",
+        "GUIDE #" + guide.id + " · AUTHOR Bhavitej"
+      )
+    );
+
+    grid.appendChild(card);
+  });
+
+  setStatus("#guides-status", data.length + " guide loaded.");
+}
+
+
+
+
+async function createRoom(event) {
+  event.preventDefault();
+  if (!currentUser) {
+  window.location.href = "login.html";
+  return;
+}
+  if (!canUseRooms()) return;
+
+  const button = $("#create-room-button");
+  button.disabled = true;
+  setStatus("#create-room-status", "Creating room…");
+
+  const name = $("#room-name").value.trim();
+  const mode = $("#room-mode").value;
+  const teamSize = Number($("#team-size").value);
+
+  try {
+    const { data, error } = await db
+      .from("tank_rooms")
+      .insert({
+        name,
+        owner_id: currentUser.id,
+        mode,
+        team_size: teamSize,
+        status: "open"
+      })
+      .select("id")
+      .single();
+
+    if (error) throw error;
+
+    $("#room-name").value = "";
+    setStatus("#create-room-status", "Room created successfully.", "success");
+    await loadRooms();
+
+    if (data?.id) {
+      await openScoreboard(data.id, name);
+      document.querySelector("#scoreboard").scrollIntoView({ behavior: "smooth" });
+    }
+  } catch (error) {
+    setStatus("#create-room-status", error.message, "error");
+  } finally {
+    button.disabled = false;
+  }
+}
+
+async function loadRooms() {
+  const list = $("#room-list");
+  list.replaceChildren(makeElement("div", "tank-empty", "Loading rooms…"));
+
+  if (!db) return;
+
+  const { data, error } = await db
+    .from("tank_rooms")
+    .select("id, name, owner_id, mode, team_size, status, created_at")
+    .neq("status", "closed")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    showEmpty(list, "Rooms could not be loaded.");
+    setStatus("#rooms-status", error.message, "error");
+    return;
+  }
+
+  roomsCache = data ?? [];
+  list.replaceChildren();
+
+  if (!roomsCache.length) {
+    showEmpty(list, currentUser
+      ? "No open rooms yet. Create the first one."
+      : "Sign in to create rooms or send requests. No open rooms are currently listed.");
+    return;
+  }
+
+  roomsCache.forEach(room => {
+    const card = makeElement("article", "tank-room");
+    const main = makeElement("div", "tank-room-main");
+    const info = makeElement("div");
+    const status = makeElement("span", "tank-pill gold", room.status.replace("_", " "));
+    const title = makeElement("h3", "", room.name);
+    const meta = makeElement("div", "tank-room-meta",
+      room.mode + " · " + room.team_size + " players · Owner " + shortId(room.owner_id));
+
+    info.append(status, title, meta);
+    main.append(info);
+    card.appendChild(main);
+
+    const actions = makeElement("div", "tank-room-actions");
+    addRoomButton(actions, "View Scoreboard",
+      () => openScoreboard(room.id, room.name), true);
+
+    if (currentUser && room.owner_id === currentUser.id) {
+  
+
+  addRoomButton(actions, "Delete Room", () => deleteRoom(room), false);
+}else if (currentUser) {
+      const ownRequest = requestsCache.find(
+        request => request.room_id === room.id &&
+          request.requester_id === currentUser.id
+      );
+
+      if (ownRequest) {
+        actions.appendChild(makeElement(
+          "span", "tank-pill",
+          "REQUEST " + ownRequest.status.toUpperCase()
+        ));
+      } else {
+        addRoomButton(actions, "Request to Join",
+          () => requestToJoin(room.id), false);
+      }
+    } else {
+      const signInNote = makeElement("span", "tank-pill", "SIGN IN TO JOIN");
+      actions.appendChild(signInNote);
+    }
+
+    card.appendChild(actions);
+    list.appendChild(card);
+  });
+
+  setStatus("#rooms-status", roomsCache.length + " room(s) loaded from Supabase.");
+}
+async function deleteRoom(room) {
+  if (!currentUser || room.owner_id !== currentUser.id) {
+    setStatus("#rooms-status", "You can only delete your own rooms.", "error");
+    return;
+  }
+
+  if (!confirm(`Delete "${room.name}"? This will also delete its join requests and scores.`)) {
+    return;
+  }
+
+  const { error } = await db
+    .from("tank_rooms")
+    .delete()
+    .eq("id", room.id)
+    .eq("owner_id", currentUser.id);
+
+  if (error) {
+    setStatus("#rooms-status", error.message, "error");
+    return;
+  }
+
+  if (selectedRoomId === room.id) {
+    selectedRoomId = null;
+    $("#scoreboard-body").replaceChildren();
+    $("#scoreboard-title").textContent = "Select a room";
+    $("#refresh-scores").disabled = true;
+  }
+
+  setStatus("#rooms-status", "Room deleted successfully.", "success");
+
+  await loadRooms();
+  await loadRequests();
+}
+async function requestToJoin(roomId) {
+  if (!canUseRooms()) return;
+
+  const alreadyRequested = requestsCache.some(
+    request => request.room_id === roomId &&
+      request.requester_id === currentUser.id
+  );
+
+  if (alreadyRequested) {
+    setStatus("#rooms-status", "You already have a request for this room.");
+    return;
+  }
+
+  const { error } = await db.from("tank_room_requests").insert({
+    room_id: roomId,
+    requester_id: currentUser.id,
+    status: "pending"
+  });
+
+  if (error) {
+    setStatus("#rooms-status", error.message, "error");
+    return;
+  }
+
+  setStatus("#rooms-status", "Join request sent.", "success");
+  await loadRequests();
+  await loadRooms();
+}
+
+async function loadRequests() {
+  const list = $("#request-list");
+  if (!db) return;
+
+  if (!currentUser) {
+    requestsCache = [];
+    showEmpty(list, "Sign in to view your join requests.");
+    return;
+  }
+
+  list.replaceChildren(makeElement("div", "tank-empty", "Loading requests…"));
+
+  const { data, error } = await db
+    .from("tank_room_requests")
+    .select("id, room_id, requester_id, status, created_at")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    showEmpty(list, "Join requests could not be loaded.");
+    setStatus("#requests-status", error.message, "error");
+    return;
+  }
+
+  requestsCache = data ?? [];
+  list.replaceChildren();
+
+  if (!requestsCache.length) {
+    showEmpty(list, "No join requests yet.");
+    return;
+  }
+
+  const roomsById = new Map(roomsCache.map(room => [room.id, room]));
+
+  requestsCache.forEach(request => {
+    const room = roomsById.get(request.room_id);
+    const isOwner = room && room.owner_id === currentUser.id;
+    const isRequester = request.requester_id === currentUser.id;
+
+    if (!isOwner && !isRequester) return;
+
+    const card = makeElement("article", "tank-room");
+    const title = makeElement("h3", "", room?.name || "Room " + shortId(request.room_id));
+    const meta = makeElement("div", "tank-room-meta",
+      (isOwner ? "Requested by " + shortId(request.requester_id) :
+        "Your request") + " · " + request.status.toUpperCase());
+
+    card.append(title, meta);
+
+    const actions = makeElement("div", "tank-room-actions");
+
+    if (isOwner && request.status === "pending") {
+      addRoomButton(actions, "Accept", () => respondToRequest(request.id, "accepted"));
+      addRoomButton(actions, "Decline", () => respondToRequest(request.id, "declined"), true);
+    }
+
+    if (room) {
+      addRoomButton(actions, "Open Scoreboard",
+        () => openScoreboard(room.id, room.name), true);
+    }
+
+    card.appendChild(actions);
+    list.appendChild(card);
+  });
+
+  if (!list.children.length) {
+    showEmpty(list, "No requests available for your account.");
+  }
+}
+
+async function respondToRequest(requestId, status) {
+  if (!canUseRooms()) return;
+
+  const { error } = await db
+    .from("tank_room_requests")
+    .update({ status })
+    .eq("id", requestId);
+
+  if (error) {
+    setStatus("#requests-status", error.message, "error");
+    return;
+  }
+
+  setStatus("#requests-status", "Request " + status + ".", "success");
+  await loadRequests();
+  await loadRooms();
+}
+
+async function openScoreboard(roomId, roomName) {
+  selectedRoomId = roomId;
+  $("#scoreboard-title").textContent = roomName + " — Scoreboard";
+  $("#refresh-scores").disabled = false;
+  $("#scoreboard-body").replaceChildren();
+
+  const loadingRow = makeElement("tr");
+  const loadingCell = makeElement("td", "", "Loading stored scores…");
+  loadingCell.colSpan = 5;
+  loadingRow.appendChild(loadingCell);
+  $("#scoreboard-body").appendChild(loadingRow);
+
+  if (!db) return;
+
+  const { data, error } = await db
+    .from("tank_room_scores")
+    .select("player_id, player_name, points, kills, deaths, updated_at")
+    .eq("room_id", roomId)
+    .order("points", { ascending: false });
+
+  const tbody = $("#scoreboard-body");
+  tbody.replaceChildren();
+
+  if (error) {
+    const row = makeElement("tr");
+    const cell = makeElement("td", "", error.message);
+    cell.colSpan = 5;
+    row.appendChild(cell);
+    tbody.appendChild(row);
+    setStatus("#scores-status", error.message, "error");
+    return;
+  }
+
+  if (!data?.length) {
+    const row = makeElement("tr");
+    const cell = makeElement("td", "",
+      "No score entries are stored for this room yet.");
+    cell.colSpan = 5;
+    row.appendChild(cell);
+    tbody.appendChild(row);
+    setStatus("#scores-status",
+      "This scoreboard shows database records only. It does not generate scores.");
+    return;
+  }
+
+  data.forEach(score => {
+    const row = makeElement("tr");
+    const updated = score.updated_at
+      ? new Date(score.updated_at).toLocaleString()
+      : "—";
+
+    [
+      score.player_name || shortId(score.player_id || ""),
+      score.points,
+      score.kills,
+      score.deaths,
+      updated
+    ].forEach(value => row.appendChild(makeElement("td", "", String(value))));
+
+    tbody.appendChild(row);
+  });
+
+  setStatus("#scores-status", data.length + " stored score row(s) loaded.");
+}
+
+$("#create-room-form").addEventListener("submit", createRoom);
+$("#refresh-rooms").addEventListener("click", async () => {
+  await loadRooms();
+  await loadRequests();
+});
+$("#refresh-scores").addEventListener("click", () => {
+  if (selectedRoomId) {
+    const room = roomsCache.find(r => r.id === selectedRoomId);
+    openScoreboard(selectedRoomId, room?.name || "Room");
+  }
+});
+
+loadSession();
+
+
+/* Refresh listings periodically; score values remain database-backed. */
+setInterval(() => {
+  if (db) {
+    loadRooms();
+    loadRequests();
+  }
+}, 30000);
+</script>
+
+<script>
+/* ===== AUTOMATIC TANK SLIDESHOW ===== */
+(() => {
+  const root = document.querySelector(".tank-showcase");
+  if (!root) {
+    console.error("Tank showcase element not found.");
+    return;
+  }
+
+  const slides = Array.from(root.querySelectorAll(".tank-slide"));
+
+  if (slides.length < 2) {
+    console.error("Tank slideshow needs at least two slides.");
+    return;
+  }
+
+  // Prevent accidentally starting the slideshow twice.
+  if (root.dataset.autoSlideshow === "running") return;
+  root.dataset.autoSlideshow = "running";
+
+  let current = slides.findIndex(slide =>
+    slide.classList.contains("is-active")
+  );
+
+  if (current < 0) current = 0;
+
+  function showSlide(index) {
+    current = (index + slides.length) % slides.length;
+
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("is-active", i === current);
+      slide.setAttribute("aria-hidden", String(i !== current));
+    });
+  }
+
+  showSlide(current);
+
+  window.setInterval(() => {
+    showSlide(current + 1);
+  }, 4000);
+
+  console.log("Tank slideshow started:", slides.length, "slides");
+})();
+</script>
+</body>
+</html>

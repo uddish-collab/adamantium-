@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080a0e">
+    <title>Aviation Headquarters | Adamantium</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body data-mode="aviation">
+    <header class="navbar">
+        <a class="logo" href="index.html">ADA<span>MANTIUM</span></a>
+        <nav class="nav-links">
+            <a href="index.html">Overview</a>
+            <a class="active" href="#catalog">Vehicles</a>
+            <a href="#guides">Guides</a>
+            <a href="tanks.html">Tanks</a>
+            <a href="ships.html">Ships</a>
+        </nav>
+        <a class="nav-cta" href="index.html">← MAIN HQ</a>
+    </header>
+
+    <main>
+        <section class="mode-hero">
+            <div class="mode-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1474302770737-173ee21bab63?auto=format&fit=crop&w=2000&q=85')"></div>
+            <div class="mode-hero-content">
+                <p class="eyebrow">ADAMANTIUM / AIR FORCES</p>
+                <h1>OWN THE<br><span>SKIES.</span></h1>
+                <p class="hero-text">
+                    Explore aircraft, flight characteristics, aerial combat,
+                    and the principles behind effective manoeuvring.
+                    Your aviation headquarters starts here.
+                </p>
+                <a class="btn-primary" href="#catalog">EXPLORE AIRCRAFT ↓</a>
+            </div>
+        </section>
+
+        <section class="mode-section" id="catalog">
+            <div class="section-label">01 / AIRCRAFT INTELLIGENCE</div>
+            <div class="mode-section-heading">
+                <h2>THE AIRCRAFT <span>CATALOG.</span></h2>
+                <p>Search and filter aircraft categories. Vehicle details will be populated as the database is built.</p>
+            </div>
+
+            <div class="catalog-tools">
+                <input class="catalog-search" id="vehicle-search" type="search" placeholder="Search aircraft..." aria-label="Search aircraft">
+                <select class="catalog-filter" id="vehicle-filter" aria-label="Filter aircraft by category">
+                    <option value="all">All categories</option>
+                    <option value="fighter">Fighters</option>
+                    <option value="attacker">Attack aircraft</option>
+                    <option value="bomber">Bombers</option>
+                    <option value="other">Other aircraft</option>
+                </select>
+            </div>
+
+            <div class="catalog-grid" id="vehicle-grid"></div>
+            <p class="mode-notice">Catalog status: placeholder entries only. Real aircraft names, specifications, images, and game availability will be added after the database is prepared.</p>
+        </section>
+
+        <section class="mode-section" id="guides">
+            <div class="section-label">02 / FLIGHT MANUAL</div>
+            <div class="mode-section-heading">
+                <h2>AIR <span>TACTICS.</span></h2>
+                <p>Dedicated learning areas for aviation combat.</p>
+            </div>
+            <div class="guide-grid">
+                <article class="guide-card">
+                    <span>GUIDE / 001</span>
+                    <h3>FLIGHT FUNDAMENTALS</h3>
+                    <p>Understand basic flight controls, energy, speed, and manoeuvring.</p>
+                </article>
+                <article class="guide-card">
+                    <span>GUIDE / 002</span>
+                    <h3>AERIAL ENGAGEMENTS</h3>
+                    <p>Learn the principles of awareness, positioning, and target tracking.</p>
+                </article>
+                <article class="guide-card">
+                    <span>GUIDE / 003</span>
+                    <h3>AIRCRAFT ROLES</h3>
+                    <p>Explore how aircraft design and loadouts influence combat roles.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <a class="logo" href="index.html">ADA<span>MANTIUM</span></a>
+        <p>Fan-made project. Not affiliated with Gaijin Entertainment.</p>
+        <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">BACK TO TOP ↑</a>
+    </footer>
+</body>
+</html>
