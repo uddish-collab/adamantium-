@@ -692,3 +692,219 @@ html {
 .gold-text {
     color: #C6AD7A;
 }
+.site-footer {
+    display: block;
+    padding: 0;
+    background: linear-gradient(180deg, #101116, #090a0d);
+    border-top: 1px solid rgba(189, 164, 119, .28);
+}
+
+.site-footer-inner {
+    width: min(1180px, 100%);
+    margin: 0 auto;
+    padding: 38px clamp(24px, 7vw, 90px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 36px;
+}
+
+.site-footer-label {
+    color: var(--gold);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+}
+
+.site-footer-note p {
+    max-width: 620px;
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+.site-footer-signoff {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 0 0 auto;
+}
+
+.site-footer-signoff p {
+    color: var(--ivory);
+    font-family: var(--display);
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.site-footer-signoff p span {
+    color: var(--gold);
+}
+
+.site-footer-meme {
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(189, 164, 119, .45);
+    border-radius: 2px;
+    background: transparent;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.site-footer-meme:hover {
+    background: rgba(189, 164, 119, .1);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 650px) {
+    .site-footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 24px;
+    }
+}
+.site-footer-signoff p {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.site-footer-meme {
+    width: auto;
+    height: auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    font-size: 13px;
+}
+
+.site-footer-meme:hover {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    transform: scale(1.08);
+}
+.site-footer-inner {
+    width: min(1180px, 100%);
+    padding: 32px 0 18px;
+    align-items: center;
+}
+
+.site-footer-note {
+    max-width: 620px;
+    margin-right: auto;
+    text-align: left;
+}
+
+.site-footer-label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.site-footer .site-footer-note p {
+    margin: 0;
+    color: var(--muted);
+    font: 400 11px/1.8 var(--body);
+}
+
+.site-footer-signoff {
+    gap: 3px;
+}
+
+.site-footer .site-footer-signoff p {
+    margin: 0;
+    color: var(--muted);
+    font: 400 12px/1.5 var(--body);
+    letter-spacing: 0;
+}
+
+.site-footer .site-footer-signoff p span {
+    color: var(--gold);
+    font: inherit;
+}
+
+.site-footer .site-footer-meme {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    min-width: 0;
+    padding: 2px;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    font-size: 13px;
+    opacity: .55;
+    transition: opacity .2s ease, transform .2s ease, filter .2s ease;
+}
+
+.site-footer .site-footer-meme:hover {
+    border: 0;
+    background: transparent;
+    box-shadow: 0 0 10px rgba(189, 164, 119, .28);
+    opacity: 1;
+    transform: scale(1.12);
+}
+
+@media (max-width: 650px) {
+    .site-footer-inner {
+        padding: 28px 6%;
+        align-items: flex-start;
+    }
+
+    .site-footer-signoff {
+        flex-wrap: wrap;
+    }
+}
+.site-footer .site-footer-signoff {
+    align-items: center;
+}
+
+.site-footer .site-footer-meme {
+    line-height: 1;
+}
+
+.site-footer .site-footer-meme:hover {
+transform: scale(1.08);
+}
+.site-footer .site-footer-signoff {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.site-footer .site-footer-signoff p {
+    margin: 0;
+    font: 400 12px/1.4 var(--body);
+}
+
+.site-footer .site-footer-meme {
+    display: inline-flex;
+    flex: 0 0 24px;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    font-size: 17px;
+    line-height: 1;
+    transform: none;
+}
+
+.site-footer .site-footer-meme:hover {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    transform: scale(1.08);
+}
