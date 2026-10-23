@@ -1295,7 +1295,10 @@ async function loadRooms() {
 
     const actions = makeElement("div", "tank-room-actions");
     addRoomButton(actions, "View Scoreboard",
-      () => openScoreboard(room.id, room.name), true);
+      () => {
+        openScoreboard(room.id, room.name);
+        document.querySelector("#scoreboard").scrollIntoView({ behavior: "smooth", block: "start" });
+      }, true);
 
     if (currentUser && room.owner_id === currentUser.id) {
       const ownRequests = requestsCache.filter(request =>
@@ -1433,7 +1436,10 @@ async function loadRequests() {
     }
     if (room) {
       addRoomButton(actions, "Open Scoreboard",
-        () => openScoreboard(room.id, room.name), true);
+        () => {
+        openScoreboard(room.id, room.name);
+        document.querySelector("#scoreboard").scrollIntoView({ behavior: "smooth", block: "start" });
+      }, true);
     }
     card.appendChild(actions);
     list.appendChild(card);

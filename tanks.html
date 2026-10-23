@@ -1242,18 +1242,21 @@ async function loadGuides() {
     return;
   }
 
+  const guide = (data ?? []).find(item =>
+    /^Tank Combat Basics$/i.test(item.title || "")
+  ) ?? (data ?? []).find(item =>
+    /\b(tank|ground forces|ground combat|armor|armour)\b/i.test(item.title || "")
+  );
+
   grid.replaceChildren();
 
-  if (!data?.length) {
-    showEmpty(grid, "No guides have been published yet.");
-    setStatus(
-      "#guides-status",
-      "Add guides to the guides table in Supabase."
-    );
+  if (!guide) {
+    showEmpty(grid, "No tank guide has been published yet.");
+    setStatus("#guides-status", "No tank guide records were found.");
     return;
   }
 
-  data.forEach(guide => {
+  [guide].forEach(guide => {
     const card = makeElement("article", "tank-card");
 
     card.append(
@@ -1270,7 +1273,7 @@ async function loadGuides() {
     grid.appendChild(card);
   });
 
-  setStatus("#guides-status", data.length + " guide loaded.");
+  setStatus("#guides-status", "1 tank guide loaded.");
 }
 
 
@@ -1365,13 +1368,16 @@ async function loadRooms() {
 
     const actions = makeElement("div", "tank-room-actions");
     addRoomButton(actions, "View Scoreboard",
-      () => openScoreboard(room.id, room.name), true);
+      () => {
+        openScoreboard(room.id, room.name);
+        document.querySelector("#scoreboard").scrollIntoView({ behavior: "smooth", block: "start" });
+      }, true);
 
-    if (currentUser && room.owner_id === currentUser.id) {
+    if (currentUser && room.owner_id === currentUser.id && !/^DEMO\b/i.test(room.name || "")) {
   
 
   addRoomButton(actions, "Delete Room", () => deleteRoom(room), false);
-}else if (currentUser) {
+} else if (currentUser && !/^DEMO\b/i.test(room.name || "")) {
       const ownRequest = requestsCache.find(
         request => request.room_id === room.id &&
           request.requester_id === currentUser.id
@@ -1386,7 +1392,7 @@ async function loadRooms() {
         addRoomButton(actions, "Request to Join",
           () => requestToJoin(room.id), false);
       }
-    } else {
+    } else if (!/^DEMO\b/i.test(room.name || "")) {
       const signInNote = makeElement("span", "tank-pill", "SIGN IN TO JOIN");
       actions.appendChild(signInNote);
     }
@@ -1516,7 +1522,10 @@ async function loadRequests() {
 
     if (room) {
       addRoomButton(actions, "Open Scoreboard",
-        () => openScoreboard(room.id, room.name), true);
+        () => {
+        openScoreboard(room.id, room.name);
+        document.querySelector("#scoreboard").scrollIntoView({ behavior: "smooth", block: "start" });
+      }, true);
     }
 
     card.appendChild(actions);
