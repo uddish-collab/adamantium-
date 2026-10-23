@@ -86,7 +86,7 @@
       background-image:
         linear-gradient(90deg, rgba(7,8,10,.94) 0%, rgba(7,8,10,.63) 47%, rgba(7,8,10,.12) 100%),
         linear-gradient(0deg, rgba(7,8,10,.85), transparent 65%),
-        url("https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=2200&q=85");
+url("assets/tanks/bro.jpg");
       background-position: center;
       background-size: cover;
       border-bottom: 1px solid var(--tank-border);
@@ -753,7 +753,7 @@
       <div class="tank-section-heading">
         <div>
           <div class="tank-kicker">Community / Ground Forces</div>
-          <h2>Room Lobby</h2>
+          <h2>Ground Forces Room Lobby</h2>
           <p>Create a room, request to join another crew, and open its scoreboard.</p>
         </div>
         <span class="tank-pill gold">Supabase Connected</span>
@@ -806,7 +806,7 @@
           <div class="tank-panel" style="margin-bottom:18px">
             <div class="tank-kicker">Available crews</div>
             <h3 style="font:600 27px 'Barlow Condensed',sans-serif;margin:0 0 8px">
-              Find a room
+              Find a tank room
             </h3>
             <p style="color:var(--tank-muted);font-size:12px;line-height:1.8;margin:0">
               Open rooms are loaded from your Supabase database. Send a join
@@ -872,9 +872,9 @@
     <section class="tank-section" id="vehicles">
       <div class="tank-section-heading">
         <div>
-          <div class="tank-kicker">Vehicle database</div>
+          <div class="tank-kicker">Tank database</div>
           <h2>Ground Vehicle Index</h2>
-          <p>Vehicles are loaded from your existing <code>vehicles</code> table.</p>
+          <p>Browse tanks by name, nation, and class.</p>
         </div>
       </div>
 
@@ -897,7 +897,7 @@
         <div>
           <div class="tank-kicker">Knowledge / Tactics</div>
           <h2>Combat Guides</h2>
-          <p>Community guides loaded from your existing <code>guides</code> table.</p>
+          <p>Strategies and techniques for effective tank warfare.</p>
         </div>
       </div>
 
@@ -1433,7 +1433,7 @@ async function loadRooms() {
     list.appendChild(card);
   });
 
-  setStatus("#rooms-status", roomsCache.length + " room(s) loaded from Supabase.");
+  setStatus("#rooms-status", roomsCache.length + " tank room(s) loaded from Supabase.");
 }
 async function deleteRoom(room) {
   if (!currentUser || room.owner_id !== currentUser.id) {
@@ -1589,7 +1589,7 @@ async function respondToRequest(requestId, status) {
 
 async function openScoreboard(roomId, roomName) {
   selectedRoomId = roomId;
-  $("#scoreboard-title").textContent = roomName + " — Scoreboard";
+  $("#scoreboard-title").textContent = roomName.replace(" - ", " | ") + " — Scoreboard";
   $("#refresh-scores").disabled = false;
   $("#scoreboard-body").replaceChildren();
 
