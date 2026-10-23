@@ -1321,7 +1321,9 @@ async function loadRooms() {
           () => requestToJoin(room.id));
       }
     } else if (!/^DEMO\b/i.test(room.name || "")) {
-      actions.appendChild(makeElement("span", "tank-pill", "SIGN IN TO JOIN"));
+      const signInButton = makeElement("a", "tank-button secondary", "Sign In to Join");
+      signInButton.href = "login.html?next=aviation.html";
+      actions.appendChild(signInButton);
     }
 
     card.appendChild(actions);

@@ -1393,8 +1393,9 @@ async function loadRooms() {
           () => requestToJoin(room.id), false);
       }
     } else if (!/^DEMO\b/i.test(room.name || "")) {
-      const signInNote = makeElement("span", "tank-pill", "SIGN IN TO JOIN");
-      actions.appendChild(signInNote);
+      const signInButton = makeElement("a", "tank-button secondary", "Sign In to Join");
+      signInButton.href = "login.html?next=tanks.html";
+      actions.appendChild(signInButton);
     }
 
     card.appendChild(actions);
