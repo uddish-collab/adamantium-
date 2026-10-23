@@ -1,93 +1,716 @@
-
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#080a0e">
-    <title>Naval Headquarters | Adamantium</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
-</head>
-<body data-mode="ships">
-    <header class="navbar">
-        <a class="logo" href="index.html">ADA<span>MANTIUM</span></a>
-        <nav class="nav-links">
-            <a href="index.html">Overview</a>
-            <a class="active" href="#catalog">Vehicles</a>
-            <a href="#guides">Guides</a>
-            <a href="tanks.html">Tanks</a>
-            <a href="aviation.html">Aviation</a>
-        </nav>
-        <a class="nav-cta" href="index.html">← MAIN HQ</a>
-    </header>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0b0c0f"><title>Naval Command | Adamantium</title><meta name="description" content="Explore naval vessels, fleet guides, and ship combat rooms on Adamantium."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css">
+  <style>
+    /* Tanks page additions. Homepage stylesheet remains in use. */
+    :root {
+      --tank-bg: #0b0c0f;
+      --tank-panel: #121419;
+      --tank-border: rgba(255,255,255,.11);
+      --tank-gold: #bda477;
+      --tank-muted: #a4a7ad;
+      --tank-white: #f4f1e9;
+    }
 
-    <main>
-        <section class="mode-hero">
-            <div class="mode-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=2000&q=85')"></div>
-            <div class="mode-hero-content">
-                <p class="eyebrow">ADAMANTIUM / NAVAL FORCES</p>
-                <h1>RULE THE<br><span>WATERS.</span></h1>
-                <p class="hero-text">
-                    Explore naval vessels, weapon systems, range, positioning,
-                    and the tactical decisions that shape engagements at sea.
-                </p>
-                <a class="btn-primary" href="#catalog">EXPLORE VESSELS ↓</a>
-            </div>
-        </section>
+    body {
+      background: var(--tank-bg);
+      color: var(--tank-white);
+    }
 
-        <section class="mode-section" id="catalog">
-            <div class="section-label">01 / NAVAL INTELLIGENCE</div>
-            <div class="mode-section-heading">
-                <h2>THE VESSEL <span>CATALOG.</span></h2>
-                <p>Search and filter naval categories. Vehicle details will be populated as the database is built.</p>
-            </div>
+    .tank-page {
+      width: 100%;
+      overflow: hidden;
+    }
 
-            <div class="catalog-tools">
-                <input class="catalog-search" id="vehicle-search" type="search" placeholder="Search vessels..." aria-label="Search vessels">
-                <select class="catalog-filter" id="vehicle-filter" aria-label="Filter vessels by category">
-                    <option value="all">All categories</option>
-                    <option value="coastal">Coastal vessels</option>
-                    <option value="destroyer">Destroyers</option>
-                    <option value="cruiser">Cruisers</option>
-                    <option value="other">Other vessels</option>
-                </select>
-            </div>
+    .tank-topbar {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 16px clamp(20px, 5vw, 76px);
+      border-bottom: 1px solid var(--tank-border);
+      background: #0b0c0f;
+    }
 
-            <div class="catalog-grid" id="vehicle-grid"></div>
-            <p class="mode-notice">Catalog status: placeholder entries only. Real vessel names, specifications, images, and game availability will be added after the database is prepared.</p>
-        </section>
+    .tank-brand {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 1.7px;
+  white-space: nowrap;
+  color: #f0ede5;
+  text-decoration: none;
+}
 
-        <section class="mode-section" id="guides">
-            <div class="section-label">02 / NAVAL FIELD MANUAL</div>
-            <div class="mode-section-heading">
-                <h2>NAVAL <span>TACTICS.</span></h2>
-                <p>Dedicated learning areas for naval combat.</p>
-            </div>
-            <div class="guide-grid">
-                <article class="guide-card">
-                    <span>GUIDE / 001</span>
-                    <h3>VESSEL CAPABILITIES</h3>
-                    <p>Understand how ship types and weapon systems affect their combat roles.</p>
-                </article>
-                <article class="guide-card">
-                    <span>GUIDE / 002</span>
-                    <h3>RANGE & POSITIONING</h3>
-                    <p>Learn about engagement distance, lines of fire, and positioning choices.</p>
-                </article>
-                <article class="guide-card">
-                    <span>GUIDE / 003</span>
-                    <h3>SEA ENGAGEMENTS</h3>
-                    <p>Explore target prioritisation, situational awareness, and naval tactics.</p>
-                </article>
-            </div>
-        </section>
-    </main>
+.tank-brand span {
+  color: #bda477;
+}
+    .tank-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
 
-    <footer class="site-footer">
-        <a class="logo" href="index.html">ADA<span>MANTIUM</span></a>
-        <p>Fan-made project. Not affiliated with Gaijin Entertainment.</p>
-        <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">BACK TO TOP ↑</a>
-    </footer>
-</body>
-</html>
+    .tank-nav a {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #c6c7ca;
+      text-decoration: none;
+    }
+
+    .tank-nav a:hover,
+    .tank-nav a.active {
+      color: var(--tank-gold);
+    }
+
+    .tank-hero {
+      min-height: 470px;
+      display: flex;
+      align-items: flex-end;
+      position: relative;
+      background-color: #202326;
+      background-image:
+        linear-gradient(90deg, rgba(7,8,10,.94) 0%, rgba(7,8,10,.63) 47%, rgba(7,8,10,.12) 100%),
+        linear-gradient(0deg, rgba(7,8,10,.85), transparent 65%),
+        url("https://images.unsplash.com/photo-1474302770737-173ee21bab63?auto=format&fit=crop&w=2200&q=85");
+      background-position: center;
+      background-size: cover;
+      border-bottom: 1px solid var(--tank-border);
+    }
+
+    .tank-hero-inner {
+      width: min(1180px, 100%);
+      margin: auto;
+      padding: 72px 28px 64px;
+      position: relative;
+    }
+
+    .tank-eyebrow {
+      color: var(--tank-gold);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin: 0 0 15px;
+    }
+
+    .tank-hero h1 {
+      font: 800 clamp(48px, 8vw, 88px)/.94 "Barlow Condensed", sans-serif;
+      text-transform: uppercase;
+      max-width: 720px;
+      margin: 0;
+      letter-spacing: .5px;
+    }
+
+    .tank-hero p:not(.tank-eyebrow) {
+      color: #d0d0d0;
+      line-height: 1.8;
+      max-width: 540px;
+      font-size: 14px;
+      margin: 22px 0 26px;
+    }
+
+    .tank-button {
+      appearance: none;
+      border: 1px solid var(--tank-gold);
+      background: var(--tank-gold);
+      color: #111;
+      min-height: 42px;
+      padding: 11px 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font: 700 11px Inter, sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .tank-button:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .tank-button.secondary {
+      color: var(--tank-white);
+      background: transparent;
+      border-color: var(--tank-border);
+    }
+
+    .tank-button:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .tank-container {
+      width: min(1180px, 100%);
+      margin: auto;
+      padding: 0 28px;
+    }
+
+    .tank-section {
+      padding: 66px 0;
+      border-bottom: 1px solid var(--tank-border);
+      scroll-margin-top: 24px;
+    }
+
+    .tank-section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .tank-section-heading h2 {
+      font: 700 clamp(30px, 4vw, 44px)/1 "Barlow Condensed", sans-serif;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .tank-section-heading p {
+      color: var(--tank-muted);
+      font-size: 13px;
+      line-height: 1.7;
+      margin: 10px 0 0;
+    }
+
+    .tank-kicker {
+      color: var(--tank-gold);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .tank-panel {
+      background: var(--tank-panel);
+      border: 1px solid var(--tank-border);
+      padding: 22px;
+      min-width: 0;
+    }
+
+    .tank-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .tank-two-col {
+      display: grid;
+      grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .tank-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tank-field label {
+      color: #c4c5c9;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .7px;
+      text-transform: uppercase;
+    }
+
+    .tank-field input,
+    .tank-field select,
+    .tank-field textarea,
+    .tank-toolbar input,
+    .tank-toolbar select {
+      width: 100%;
+      min-width: 0;
+      padding: 12px 13px;
+      color: var(--tank-white);
+      background: #0c0e12;
+      border: 1px solid #30333a;
+      border-radius: 0;
+      font: 13px Inter, sans-serif;
+      outline: none;
+    }
+
+    .tank-field input:focus,
+    .tank-field select:focus,
+    .tank-field textarea:focus,
+    .tank-toolbar input:focus,
+    .tank-toolbar select:focus {
+      border-color: var(--tank-gold);
+    }
+
+    .tank-field select option,
+    .tank-toolbar select option {
+      background: #121419;
+    }
+
+    .tank-toolbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 200px;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .tank-card {
+      padding: 20px;
+      background: var(--tank-panel);
+      border: 1px solid var(--tank-border);
+      min-width: 0;
+    }
+
+    .tank-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .tank-tag {
+      color: var(--tank-gold);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+
+    .tank-card h3 {
+      font: 600 24px/1.1 "Barlow Condensed", sans-serif;
+      margin: 0 0 10px;
+      overflow-wrap: anywhere;
+    }
+
+    .tank-card p {
+      color: var(--tank-muted);
+      font-size: 12px;
+      line-height: 1.8;
+      margin: 0 0 18px;
+      overflow-wrap: anywhere;
+    }
+
+    .tank-card-footer {
+      border-top: 1px solid var(--tank-border);
+      padding-top: 14px;
+      color: #8e929a;
+      font-size: 10px;
+      letter-spacing: .5px;
+      overflow-wrap: anywhere;
+    }
+
+    .tank-room-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .tank-room {
+      background: var(--tank-panel);
+      border: 1px solid var(--tank-border);
+      padding: 19px;
+    }
+
+    .tank-room-main {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+    }
+
+    .tank-room h3 {
+      font: 600 24px "Barlow Condensed", sans-serif;
+      margin: 8px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .tank-room-meta {
+      color: var(--tank-muted);
+      font-size: 11px;
+      line-height: 1.9;
+    }
+
+    .tank-room-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .tank-pill {
+      display: inline-block;
+      padding: 5px 8px;
+      border: 1px solid var(--tank-border);
+      color: #c7c8cc;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .tank-pill.gold {
+      border-color: rgba(189,164,119,.5);
+      color: var(--tank-gold);
+    }
+
+    .tank-status {
+      min-height: 18px;
+      margin: 12px 0 0;
+      color: var(--tank-muted);
+      font-size: 12px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+
+    .tank-status.error {
+      color: #ff9c9c;
+    }
+
+    .tank-status.success {
+      color: #a6d9b0;
+    }
+
+    .tank-empty {
+      border: 1px dashed #383a40;
+      padding: 25px;
+      color: var(--tank-muted);
+      font-size: 13px;
+      line-height: 1.8;
+      grid-column: 1 / -1;
+    }
+
+    .tank-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--tank-border);
+    }
+
+    .tank-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 500px;
+      font-size: 12px;
+      text-align: left;
+    }
+
+    .tank-table th {
+      background: #17191e;
+      color: var(--tank-gold);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .tank-table th,
+    .tank-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--tank-border);
+    }
+
+    .tank-table td {
+      color: #dedfe2;
+    }
+
+    .tank-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .tank-table td:first-child {
+      font-weight: 600;
+    }
+
+    .tank-footer {
+      padding: 28px;
+      text-align: center;
+      color: #777b83;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .tank-footer a {
+      color: var(--tank-gold);
+      text-decoration: none;
+    }
+
+    .tank-loading {
+      color: var(--tank-muted);
+      font-size: 12px;
+      padding: 12px 0;
+    }
+
+    @media (max-width: 800px) {
+      .tank-two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .tank-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .tank-hero {
+        min-height: 430px;
+        background-position: 58% center;
+      }
+
+      .tank-nav {
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .tank-topbar {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .tank-nav {
+        gap: 15px;
+      }
+
+      .tank-container {
+        padding: 0 18px;
+      }
+
+      .tank-hero-inner {
+        padding: 55px 20px 44px;
+      }
+
+      .tank-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tank-toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .tank-section {
+        padding: 46px 0;
+      }
+
+      .tank-section-heading,
+      .tank-room-main {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+/* ===== ADAMANTIUM TANK SHOWCASE ===== */
+.tank-showcase {
+  position: relative;
+  overflow: hidden;
+  background: #101216;
+  border: 1px solid var(--tank-border);
+}
+
+.tank-showcase-track {
+  position: relative;
+  min-height: 480px;
+}
+
+.tank-slide {
+  position: absolute;
+  inset: 0;
+  min-height: 480px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(22px);
+  transition:
+    opacity .65s ease,
+    transform .65s ease,
+    visibility .65s;
+}
+
+.tank-slide.is-active {
+  position: relative;
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.tank-slide img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.tank-slide-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(7,8,10,.94), rgba(7,8,10,.45) 58%, rgba(7,8,10,.08)),
+    linear-gradient(0deg, rgba(7,8,10,.82), transparent 65%);
+}
+
+.tank-slide-info {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  min-height: 480px;
+  max-width: 650px;
+  padding: clamp(25px, 5vw, 58px);
+}
+
+.tank-slide-info h3 {
+  margin: 8px 0 12px;
+  color: var(--tank-white);
+  font: 800 clamp(48px, 8vw, 82px)/.95
+        "Barlow Condensed", sans-serif;
+  text-transform: uppercase;
+}
+
+.tank-slide-info p {
+  max-width: 430px;
+  margin: 0 0 24px;
+  color: #d0d0d0;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.tank-slide-number {
+  color: var(--tank-gold);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.tank-showcase-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 20px;
+  background: #111318;
+  border-top: 1px solid var(--tank-border);
+}
+
+.tank-showcase-arrow {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  color: var(--tank-gold);
+  background: transparent;
+  border: 1px solid #45403a;
+  cursor: pointer;
+  font-size: 22px;
+  transition: background .2s ease, color .2s ease;
+}
+
+.tank-showcase-arrow:hover {
+  color: #101010;
+  background: var(--tank-gold);
+}
+
+.tank-showcase-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.tank-showcase-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #555860;
+  cursor: pointer;
+  transition: background .25s ease, transform .25s ease;
+}
+
+.tank-showcase-dot.is-active {
+  background: var(--tank-gold);
+  transform: scale(1.35);
+}
+
+.tank-showcase button:focus-visible {
+  outline: 2px solid var(--tank-gold);
+  outline-offset: 4px;
+}
+
+@media (max-width: 600px) {
+  .tank-showcase-track,
+  .tank-slide,
+  .tank-slide img,
+  .tank-slide-info {
+    min-height: 390px;
+  }
+
+  .tank-slide-info {
+    padding: 25px 20px;
+  }
+
+  .tank-showcase-controls {
+    padding: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tank-slide,
+  .tank-showcase-arrow,
+  .tank-showcase-dot {
+    transition: none;
+  }
+}
+
+  </style>
+</head><body data-mode=""><div class="tank-page">
+<header class="tank-topbar"><a class="tank-brand" href="index.html">ADA<span>MANTIUM</span></a><nav class="tank-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="#vehicles">Ships</a><a href="#rooms" class="active">Rooms</a><a href="#guides">Guides</a></nav><span class="tank-pill gold" id="auth-indicator">Database connection pending</span></header>
+<section class="tank-hero"><div class="tank-hero-inner"><p class="tank-eyebrow">Adamantium / Naval Forces</p><h1>Rule the<br><span class="gold-text">Seas.</span></h1><p>Explore warships, build your fleet, challenge naval rooms, and study the tactics that win engagements at sea.</p><a class="tank-button" href="#rooms">Enter Naval Room Lobby &rarr;</a></div></section>
+<main class="tank-container">
+<section class="tank-section" id="rooms"><div class="tank-section-heading"><div><div class="tank-kicker">Community / Naval Forces</div><h2>Naval Room Lobby</h2><p>Create a fleet room, request to join another crew, and open its scoreboard.</p></div><span class="tank-pill gold">Naval Database / Not Connected</span></div><div class="tank-two-col"><div class="tank-panel"><div class="tank-kicker">Your fleet</div><h3 style="font:600 27px 'Barlow Condensed',sans-serif;margin:0 0 20px">Create a naval room</h3><form id="create-room-form" onsubmit="return false"><div class="tank-field"><label for="room-name">Room name</label><input id="room-name" maxlength="60" required placeholder="e.g. Atlantic Fleet"></div><div class="tank-field"><label for="room-mode">Battle format</label><select id="room-mode"><option>Realistic Battles</option><option>Arcade Battles</option><option>Fleet Training</option><option>Friendly Match</option></select></div><div class="tank-field"><label for="team-size">Team size</label><select id="team-size"><option value="2">2 players</option><option value="4" selected>4 players</option><option value="6">6 players</option><option value="8">8 players</option><option value="12">12 players</option><option value="16">16 players</option></select></div><button class="tank-button" type="button" id="create-room-button">Create Room</button><p class="tank-status" id="create-room-status" role="status"></p></form></div><div><div class="tank-panel" style="margin-bottom:18px"><div class="tank-kicker">Available fleets</div><h3 style="font:600 27px 'Barlow Condensed',sans-serif;margin:0 0 8px">Find a naval room</h3><p style="color:var(--tank-muted);font-size:12px;line-height:1.8;margin:0">Open naval rooms are listed here. Join requests apply to player-created rooms. Demo rooms are view-only.</p><button class="tank-button secondary" id="refresh-rooms" type="button" style="margin-top:17px">Refresh Rooms</button><p class="tank-status" id="rooms-status" role="status"></p></div><div class="tank-room-list" id="room-list"><div class="tank-empty">Naval rooms will appear here after the database is connected.</div></div></div></div></section>
+<section class="tank-section" id="requests"><div class="tank-section-heading"><div><div class="tank-kicker">Fleet management</div><h2>Join Requests</h2><p>Your outgoing requests and requests awaiting your decision.</p></div></div><div id="request-list" class="tank-room-list"><div class="tank-empty">Join requests will appear here after the database is connected.</div></div><p class="tank-status" id="requests-status" role="status"></p></section>
+<section class="tank-section" id="scoreboard"><div class="tank-section-heading"><div><div class="tank-kicker">Room results</div><h2 id="scoreboard-title">Room Scoreboard</h2><p>Open a room scoreboard to see its crew results.</p></div><button class="tank-button secondary" id="refresh-scores" type="button" disabled>Refresh Scores</button></div><div class="tank-table-wrap"><table class="tank-table"><thead><tr><th>Player ID</th><th>Points</th><th>Kills</th><th>Deaths</th><th>Updated</th></tr></thead><tbody id="scoreboard-body"><tr><td colspan="5">Room scores will appear here after the database is connected.</td></tr></tbody></table></div><p class="tank-status" id="scores-status" role="status"></p></section>
+<section class="tank-section" id="vehicles"><div class="tank-section-heading"><div><div class="tank-kicker">Naval database</div><h2>Ship Index</h2><p>Browse naval vessels by name, nation, and class.</p></div></div><div class="tank-toolbar"><input id="vehicle-search" type="search" placeholder="Search ships or nation…" aria-label="Search ships"><select id="vehicle-filter" aria-label="Filter ship category"><option value="all">All ships</option></select></div><div id="vehicle-grid" class="tank-grid"><div class="tank-empty">Ship entries will appear here after the database is connected.</div></div><p class="tank-status" id="vehicles-status" role="status"></p></section>
+<section class="tank-section" id="guides"><div class="tank-section-heading"><div><div class="tank-kicker">Knowledge / Tactics</div><h2>Fleet Guides</h2><p>A field manual for naval engagements.</p></div></div><div id="guide-grid" class="tank-grid"><div class="tank-empty">Fleet guides will appear here after the database is connected.</div></div><p class="tank-status" id="guides-status" role="status"></p></section>
+<section class="tank-section" id="tank-showcase"><div class="tank-section-heading"><div><div class="tank-kicker">Legends / Naval Forces</div><h2>Ship Showcase</h2><p>Featured warships and their roles at sea.</p></div><span class="tank-pill gold">Featured Ships</span></div><div class="tank-showcase" aria-roledescription="carousel" aria-label="Featured ships"><div class="tank-showcase-track"><article class="tank-slide is-active" aria-hidden="false"><img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1800&q=85" alt="USS Iowa at sea"><div class="tank-slide-shade"></div><div class="tank-slide-info"><span class="tank-kicker">United States / Battleship</span><h3>USS Iowa</h3><p>A fast battleship known for heavy guns, strong protection, and fleet command.</p><span class="tank-slide-number">01 / 05</span></div></article><article class="tank-slide " aria-hidden="true"><img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1800&q=85" alt="HMS Warspite at sea"><div class="tank-slide-shade"></div><div class="tank-slide-info"><span class="tank-kicker">United Kingdom / Battleship</span><h3>HMS Warspite</h3><p>A Queen Elizabeth class battleship celebrated for its service across two world wars.</p><span class="tank-slide-number">02 / 05</span></div></article><article class="tank-slide " aria-hidden="true"><img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1800&q=85" alt="IJN Yamato at sea"><div class="tank-slide-shade"></div><div class="tank-slide-info"><span class="tank-kicker">Japan / Battleship</span><h3>IJN Yamato</h3><p>A heavily armed battleship built around the largest naval guns ever mounted at sea.</p><span class="tank-slide-number">03 / 05</span></div></article><article class="tank-slide " aria-hidden="true"><img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1800&q=85" alt="Bismarck at sea"><div class="tank-slide-shade"></div><div class="tank-slide-info"><span class="tank-kicker">Germany / Battleship</span><h3>Bismarck</h3><p>A powerful battleship designed for long-range operations in the Atlantic.</p><span class="tank-slide-number">04 / 05</span></div></article><article class="tank-slide " aria-hidden="true"><img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1800&q=85" alt="USS Enterprise at sea"><div class="tank-slide-shade"></div><div class="tank-slide-info"><span class="tank-kicker">United States / Aircraft Carrier</span><h3>USS Enterprise</h3><p>A pioneering carrier whose air wing projected naval power across the Pacific.</p><span class="tank-slide-number">05 / 05</span></div></article></div></div><p class="tank-status" id="tank-showcase-status" aria-live="polite"></p></section>
+</main><footer class="tank-footer"><a href="index.html">Adamantium</a> &nbsp; / &nbsp; Naval Forces</footer></div><script src="script.js"></script><script>
+'use strict';
+const $ = selector => document.querySelector(selector);
+$('#create-room-button').disabled = true;
+$('#refresh-scores').disabled = true;
+$('#create-room-button').addEventListener('click', () => {
+  $('#create-room-status').textContent = 'Connect the naval database before creating rooms.';
+});
+$('#refresh-rooms').addEventListener('click', () => {
+  $('#rooms-status').textContent = 'Connect the naval database before loading rooms.';
+});
+$('#vehicle-filter').addEventListener('change', () => {});
+$('#vehicle-search').addEventListener('input', () => {});
+$('#refresh-scores').addEventListener('click', () => {
+  $('#scores-status').textContent = 'Connect the naval database before loading scores.';
+});
+(() => {
+  const slides = [...document.querySelectorAll('.tank-slide')];
+  let current = 0;
+  window.setInterval(() => {
+    slides[current].classList.remove('is-active');
+    slides[current].setAttribute('aria-hidden', 'true');
+    current = (current + 1) % slides.length;
+    slides[current].classList.add('is-active');
+    slides[current].setAttribute('aria-hidden', 'false');
+  }, 4000);
+})();
+$('#rooms-status').textContent = 'Naval database is not connected.';
+$('#requests-status').textContent = 'Naval database is not connected.';
+$('#vehicles-status').textContent = 'Naval database is not connected.';
+$('#guides-status').textContent = 'Naval database is not connected.';
+$('#scores-status').textContent = 'Naval database is not connected.';
+</script></body></html>

@@ -168,14 +168,18 @@
     const SUPABASE_URL = "https://wxxqsoumrdfbuosowyki.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_2pdiD1MUA5SrOCKI8LoQgQ_T7ouSuQy";
 
-    const authReturnPage = new URLSearchParams(window.location.search).get("next") === "aviation.html"
-      ? "aviation.html"
+    const requestedReturnPage = new URLSearchParams(window.location.search).get("next");
+    const authReturnPage = ["tanks.html", "aviation.html", "ships.html"].includes(requestedReturnPage)
+      ? requestedReturnPage
       : "tanks.html";
 
+    const backLink = document.querySelector(".back");
     if (authReturnPage === "aviation.html") {
-      const backLink = document.querySelector(".back");
       backLink.href = "aviation.html";
       backLink.textContent = "← Back to Aviation";
+    } else if (authReturnPage === "ships.html") {
+      backLink.href = "ships.html";
+      backLink.textContent = "← Back to Naval Forces";
     }
 
     const db = window.supabase.createClient(
@@ -254,7 +258,7 @@
         if (error) throw error;
 
         if (data.session) {
-          showMessage("Account created! Taking you to Ground Forces...", "success");
+          showMessage("Account created! Taking you to " + (authReturnPage === "ships.html" ? "Naval Forces" : authReturnPage === "aviation.html" ? "Aviation" : "Ground Forces") + "...", "success");
           window.location.href = authReturnPage;
           return;
         }
