@@ -372,6 +372,22 @@
       color: var(--tank-gold);
     }
 
+    .tank-auth-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tank-signout {
+      background: transparent;
+      cursor: pointer;
+      font: inherit;
+      font-size: 9px;
+    }
+
+    .tank-signout[hidden] {
+      display: none;
+    }
     .tank-status {
       min-height: 18px;
       margin: 12px 0 0;
@@ -699,7 +715,7 @@
       <a href="#guides">Guides</a>
     </nav>
 
-    <span class="tank-pill gold" id="auth-indicator">Checking session</span>
+    <div class="tank-auth-actions"><span class="tank-pill gold" id="auth-indicator">Checking session</span><button class="tank-pill gold tank-signout" id="sign-out-button" type="button" hidden>Sign Out</button></div>
   </header>
 
   <!-- STATIC IMAGE HERO: no video element on this page -->
@@ -1093,6 +1109,7 @@ async function loadSession() {
 }
 
 function updateAuthLabel() {
+  $("#sign-out-button").hidden = !currentUser;
   $("#auth-indicator").textContent = currentUser
     ? "Signed In"
     : "Sign In Required";
@@ -1633,6 +1650,15 @@ $("#refresh-scores").addEventListener("click", () => {
   }
 });
 
+$("#sign-out-button").addEventListener("click", async () => {
+  const button = $("#sign-out-button");
+  button.disabled = true;
+  const { error } = await db.auth.signOut();
+  button.disabled = false;
+  if (error) {
+    setStatus("#rooms-status", error.message, "error");
+  }
+});
 loadSession();
 
 

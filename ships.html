@@ -359,6 +359,22 @@
       color: var(--tank-gold);
     }
 
+    .tank-auth-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tank-signout {
+      background: transparent;
+      cursor: pointer;
+      font: inherit;
+      font-size: 9px;
+    }
+
+    .tank-signout[hidden] {
+      display: none;
+    }
     .tank-status {
       min-height: 18px;
       margin: 12px 0 0;
@@ -672,7 +688,7 @@
 
   </style>
 </head><body data-mode=""><div class="tank-page">
-<header class="tank-topbar"><a class="tank-brand" href="index.html">ADA<span>MANTIUM</span></a><nav class="tank-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="#vehicles">Ships</a><a href="#rooms" class="active">Rooms</a><a href="#guides">Guides</a></nav><span class="tank-pill gold" id="auth-indicator">Database connection pending</span></header>
+<header class="tank-topbar"><a class="tank-brand" href="index.html">ADA<span>MANTIUM</span></a><nav class="tank-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="#vehicles">Ships</a><a href="#rooms" class="active">Rooms</a><a href="#guides">Guides</a></nav><div class="tank-auth-actions"><span class="tank-pill gold" id="auth-indicator">Database connection pending</span><button class="tank-pill gold tank-signout" id="sign-out-button" type="button" hidden>Sign Out</button></div></header>
 <section class="tank-hero"><div class="tank-hero-inner"><p class="tank-eyebrow">Adamantium / Naval Forces</p><h1>Rule the<br><span class="gold-text">Seas.</span></h1><p>Explore warships, build your fleet, challenge naval rooms, and study the tactics that win engagements at sea.</p><a class="tank-button" href="#rooms">Enter Naval Room Lobby &rarr;</a></div></section>
 <main class="tank-container">
 <section class="tank-section" id="rooms"><div class="tank-section-heading"><div><div class="tank-kicker">Community / Naval Forces</div><h2>Naval Room Lobby</h2><p>Create a fleet room, request to join another crew, and open its scoreboard.</p></div><span class="tank-pill gold">Naval Database / Connecting…</span></div><div class="tank-two-col"><div class="tank-panel"><div class="tank-kicker">Your fleet</div><h3 style="font:600 27px 'Barlow Condensed',sans-serif;margin:0 0 20px">Create a naval room</h3><form id="create-room-form" onsubmit="return false"><div class="tank-field"><label for="room-name">Room name</label><input id="room-name" maxlength="60" required placeholder="e.g. Atlantic Fleet"></div><div class="tank-field"><label for="room-mode">Battle format</label><select id="room-mode"><option>Realistic Battles</option><option>Arcade Battles</option><option>Fleet Training</option><option>Friendly Match</option></select></div><div class="tank-field"><label for="team-size">Team size</label><select id="team-size"><option value="2">2 players</option><option value="4" selected>4 players</option><option value="6">6 players</option><option value="8">8 players</option><option value="12">12 players</option><option value="16">16 players</option></select></div><button class="tank-button" type="button" id="create-room-button">Create Room</button><p class="tank-status" id="create-room-status" role="status"></p></form></div><div><div class="tank-panel" style="margin-bottom:18px"><div class="tank-kicker">Available fleets</div><h3 style="font:600 27px 'Barlow Condensed',sans-serif;margin:0 0 8px">Find a naval room</h3><p style="color:var(--tank-muted);font-size:12px;line-height:1.8;margin:0">Open naval rooms are listed here. Join requests apply to player-created rooms. Demo rooms are view-only.</p><button class="tank-button secondary" id="refresh-rooms" type="button" style="margin-top:17px">Refresh Rooms</button><p class="tank-status" id="rooms-status" role="status"></p></div><div class="tank-room-list" id="room-list"><div class="tank-empty">Naval rooms will appear here after the database is connected.</div></div></div></div></section>
@@ -1230,17 +1246,21 @@ async function openScoreboard(roomId, roomName) {
   setStatus("#scores-status", data.length + " stored score row(s) loaded.");
 }
 
+function updateAuthLabel() {
+  $("#auth-indicator").textContent = currentUser ? "Signed In" : "Sign In Required";
+  $("#sign-out-button").hidden = !currentUser;
+}
 async function loadSession() {
   try {
     const { data, error } = await db.auth.getSession();
     if (error) throw error;
     currentUser = data.session?.user ?? null;
-    $("#auth-indicator").textContent = currentUser ? "Signed In" : "Sign In Required";
+    updateAuthLabel();
     $("#create-room-button").disabled = false;
 
     db.auth.onAuthStateChange((_event, session) => {
       currentUser = session?.user ?? null;
-      $("#auth-indicator").textContent = currentUser ? "Signed In" : "Sign In Required";
+      updateAuthLabel();
       $("#create-room-button").disabled = false;
       loadRequests().then(loadRooms);
     });
@@ -1270,6 +1290,15 @@ $("#refresh-scores").addEventListener("click", () => {
   openScoreboard(selectedRoomId, room?.name || "Naval room");
 });
 
+$("#sign-out-button").addEventListener("click", async () => {
+  const button = $("#sign-out-button");
+  button.disabled = true;
+  const { error } = await db.auth.signOut();
+  button.disabled = false;
+  if (error) {
+    setStatus("#rooms-status", error.message, "error");
+  }
+});
 loadSession();
 
 setInterval(() => {
@@ -1320,3 +1349,4 @@ setInterval(() => {
   console.log("Ship slideshow started:", slides.length, "slides");
 })();
 </script></body></html>
+

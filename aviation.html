@@ -372,6 +372,22 @@
       color: var(--tank-gold);
     }
 
+    .tank-auth-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tank-signout {
+      background: transparent;
+      cursor: pointer;
+      font: inherit;
+      font-size: 9px;
+    }
+
+    .tank-signout[hidden] {
+      display: none;
+    }
     .tank-status {
       min-height: 18px;
       margin: 12px 0 0;
@@ -699,7 +715,7 @@
       <a href="#guides">Guides</a>
     </nav>
 
-    <span class="tank-pill gold" id="auth-indicator">Database connection pending</span>
+    <div class="tank-auth-actions"><span class="tank-pill gold" id="auth-indicator">Database connection pending</span><button class="tank-pill gold tank-signout" id="sign-out-button" type="button" hidden>Sign Out</button></div>
   </header>
 
   <!-- AVIATION HERO: page structure follows tanks.html. -->
@@ -1521,17 +1537,21 @@ async function openScoreboard(roomId, roomName) {
   setStatus("#scores-status", data.length + " stored score row(s) loaded.");
 }
 
+function updateAuthLabel() {
+  $("#auth-indicator").textContent = currentUser ? "Signed In" : "Sign In Required";
+  $("#sign-out-button").hidden = !currentUser;
+}
 async function loadSession() {
   try {
     const { data, error } = await db.auth.getSession();
     if (error) throw error;
     currentUser = data.session?.user ?? null;
-    $("#auth-indicator").textContent = currentUser ? "Signed In" : "Sign In Required";
+    updateAuthLabel();
     $("#create-room-button").disabled = false;
 
     db.auth.onAuthStateChange((_event, session) => {
       currentUser = session?.user ?? null;
-      $("#auth-indicator").textContent = currentUser ? "Signed In" : "Sign In Required";
+      updateAuthLabel();
       $("#create-room-button").disabled = false;
       loadRequests().then(loadRooms);
     });
@@ -1561,6 +1581,15 @@ $("#refresh-scores").addEventListener("click", () => {
   openScoreboard(selectedRoomId, room?.name || "Flight room");
 });
 
+$("#sign-out-button").addEventListener("click", async () => {
+  const button = $("#sign-out-button");
+  button.disabled = true;
+  const { error } = await db.auth.signOut();
+  button.disabled = false;
+  if (error) {
+    setStatus("#rooms-status", error.message, "error");
+  }
+});
 loadSession();
 
 setInterval(() => {
@@ -1653,3 +1682,5 @@ setInterval(() => {
 </html>
 
  
+
+
