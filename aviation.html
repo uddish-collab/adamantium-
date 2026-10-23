@@ -1331,7 +1331,7 @@ async function loadRooms() {
         document.querySelector("#scoreboard").scrollIntoView({ behavior: "smooth", block: "start" });
       }, true);
 
-    if (currentUser && room.owner_id === currentUser.id) {
+    if (currentUser && room.owner_id === currentUser.id && !/^DEMO\b/i.test(room.name || "")) {
       const ownRequests = requestsCache.filter(request =>
         request.room_id === room.id && request.status === "pending"
       );
