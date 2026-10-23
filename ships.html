@@ -372,20 +372,21 @@
       border-color: rgba(189, 164, 119, .5);
       color: var(--tank-gold);
     }
+
     .tank-request-status {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 42px;
-  padding: 0 14px;
-  border: 1px solid rgba(189, 164, 119, .5);
-  background: transparent;
-  color: var(--tank-gold);
-  font: 700 11px Inter, sans-serif;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 14px;
+      border: 1px solid rgba(189, 164, 119, .5);
+      background: transparent;
+      color: var(--tank-gold);
+      font: 700 11px Inter, sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
 
     .tank-auth-actions {
       display: flex;
@@ -722,7 +723,9 @@
   <div class="tank-page">
     <header class="tank-topbar"><a class="tank-brand" href="index.html">ADA<span>MANTIUM</span></a>
       <nav class="tank-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="#vehicles">Ships</a><a
-          href="#rooms" class="active">Rooms</a><a href="#guides">Guides</a></nav>
+          href="#rooms" class="active">Rooms</a><a href="#guides">Guides</a>
+        <a href="#tank-showcase">Gallery</a>
+      </nav>
       <div class="tank-auth-actions"><span class="tank-pill gold" id="auth-indicator">Database connection
           pending</span><button class="tank-pill gold tank-signout" id="sign-out-button" type="button" hidden>Sign
           Out</button></div>
@@ -865,8 +868,7 @@
         </div>
         <div class="tank-showcase" aria-roledescription="carousel" aria-label="Featured ships">
           <div class="tank-showcase-track">
-            <article class="tank-slide is-active" aria-hidden="false"><img
-                src="assets/naval/huh.jfif"
+            <article class="tank-slide is-active" aria-hidden="false"><img src="assets/naval/huh.jfif"
                 alt="USS Iowa at sea">
               <div class="tank-slide-shade"></div>
               <div class="tank-slide-info"><span class="tank-kicker">United States / Battleship</span>
@@ -875,9 +877,7 @@
                   class="tank-slide-number">01 / 05</span>
               </div>
             </article>
-            <article class="tank-slide " aria-hidden="true"><img
-                src="assets/naval/mo.jpg"
-                alt="USS Missouri (BB-63)">
+            <article class="tank-slide " aria-hidden="true"><img src="assets/naval/mo.jpg" alt="USS Missouri (BB-63)">
               <div class="tank-slide-shade"></div>
               <div class="tank-slide-info"><span class="tank-kicker">United States / Battleship</span>
                 <h3>USS Missouri (BB-63)</h3>
@@ -885,9 +885,7 @@
                   class="tank-slide-number">02 / 05</span>
               </div>
             </article>
-            <article class="tank-slide " aria-hidden="true"><img
-                src="assets/naval/ijn.jpg"
-                alt="IJN Yamato at sea">
+            <article class="tank-slide " aria-hidden="true"><img src="assets/naval/ijn.jpg" alt="IJN Yamato at sea">
               <div class="tank-slide-shade"></div>
               <div class="tank-slide-info"><span class="tank-kicker">Japan / Battleship</span>
                 <h3>IJN Yamato</h3>
@@ -895,8 +893,7 @@
                   class="tank-slide-number">03 / 05</span>
               </div>
             </article>
-            <article class="tank-slide " aria-hidden="true"><img
-                src="assets/naval/ind.jpg"
+            <article class="tank-slide " aria-hidden="true"><img src="assets/naval/ind.jpg"
                 alt="USS Kitty Hawk (CV-63)">
               <div class="tank-slide-shade"></div>
               <div class="tank-slide-info"><span class="tank-kicker">United States / Aircraft Carrier</span>
@@ -905,14 +902,11 @@
                   class="tank-slide-number">04 / 05</span>
               </div>
             </article>
-            <article class="tank-slide " aria-hidden="true"><img
-                src="assets/naval/last.jpg"
-                alt="INS Nilgiri (F33)">
+            <article class="tank-slide " aria-hidden="true"><img src="assets/naval/last.jpg" alt="INS Nilgiri (F33)">
               <div class="tank-slide-shade"></div>
               <div class="tank-slide-info"><span class="tank-kicker">India / Frigate</span>
                 <h3>INS Nilgiri (F33)</h3>
-                <p>A guided missile frigate of the Indian Navy.</p><span
-                  class="tank-slide-number">05 / 05</span>
+                <p>A guided missile frigate of the Indian Navy.</p><span class="tank-slide-number">05 / 05</span>
               </div>
             </article>
           </div>
