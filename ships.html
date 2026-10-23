@@ -675,42 +675,640 @@
 <header class="tank-topbar"><a class="tank-brand" href="index.html">ADA<span>MANTIUM</span></a><nav class="tank-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="#vehicles">Ships</a><a href="#rooms" class="active">Rooms</a><a href="#guides">Guides</a></nav><span class="tank-pill gold" id="auth-indicator">Database connection pending</span></header>
 <section class="tank-hero"><div class="tank-hero-inner"><p class="tank-eyebrow">Adamantium / Naval Forces</p><h1>Rule the<br><span class="gold-text">Seas.</span></h1><p>Explore warships, build your fleet, challenge naval rooms, and study the tactics that win engagements at sea.</p><a class="tank-button" href="#rooms">Enter Naval Room Lobby &rarr;</a></div></section>
 <main class="tank-container">
-<section class="tank-section" id="rooms"><div class="tank-section-heading"><div><div class="tank-kicker">Community / Naval Forces</div><h2>Naval Room Lobby</h2><p>Create a fleet room, request to join another crew, and open its scoreboard.</p></div><span class="tank-pill gold">Naval Database / Not Connected</span></div><div class="tank-two-col"><div class="tank-panel"><div class="tank-kicker">Your fleet</div><h3 style="font:600 27px 'Barlow Condensed',sans-serif;margin:0 0 20px">Create a naval room</h3><form id="create-room-form" onsubmit="return false"><div class="tank-field"><label for="room-name">Room name</label><input id="room-name" maxlength="60" required placeholder="e.g. Atlantic Fleet"></div><div class="tank-field"><label for="room-mode">Battle format</label><select id="room-mode"><option>Realistic Battles</option><option>Arcade Battles</option><option>Fleet Training</option><option>Friendly Match</option></select></div><div class="tank-field"><label for="team-size">Team size</label><select id="team-size"><option value="2">2 players</option><option value="4" selected>4 players</option><option value="6">6 players</option><option value="8">8 players</option><option value="12">12 players</option><option value="16">16 players</option></select></div><button class="tank-button" type="button" id="create-room-button">Create Room</button><p class="tank-status" id="create-room-status" role="status"></p></form></div><div><div class="tank-panel" style="margin-bottom:18px"><div class="tank-kicker">Available fleets</div><h3 style="font:600 27px 'Barlow Condensed',sans-serif;margin:0 0 8px">Find a naval room</h3><p style="color:var(--tank-muted);font-size:12px;line-height:1.8;margin:0">Open naval rooms are listed here. Join requests apply to player-created rooms. Demo rooms are view-only.</p><button class="tank-button secondary" id="refresh-rooms" type="button" style="margin-top:17px">Refresh Rooms</button><p class="tank-status" id="rooms-status" role="status"></p></div><div class="tank-room-list" id="room-list"><div class="tank-empty">Naval rooms will appear here after the database is connected.</div></div></div></div></section>
+<section class="tank-section" id="rooms"><div class="tank-section-heading"><div><div class="tank-kicker">Community / Naval Forces</div><h2>Naval Room Lobby</h2><p>Create a fleet room, request to join another crew, and open its scoreboard.</p></div><span class="tank-pill gold">Naval Database / Connecting…</span></div><div class="tank-two-col"><div class="tank-panel"><div class="tank-kicker">Your fleet</div><h3 style="font:600 27px 'Barlow Condensed',sans-serif;margin:0 0 20px">Create a naval room</h3><form id="create-room-form" onsubmit="return false"><div class="tank-field"><label for="room-name">Room name</label><input id="room-name" maxlength="60" required placeholder="e.g. Atlantic Fleet"></div><div class="tank-field"><label for="room-mode">Battle format</label><select id="room-mode"><option>Realistic Battles</option><option>Arcade Battles</option><option>Fleet Training</option><option>Friendly Match</option></select></div><div class="tank-field"><label for="team-size">Team size</label><select id="team-size"><option value="2">2 players</option><option value="4" selected>4 players</option><option value="6">6 players</option><option value="8">8 players</option><option value="12">12 players</option><option value="16">16 players</option></select></div><button class="tank-button" type="button" id="create-room-button">Create Room</button><p class="tank-status" id="create-room-status" role="status"></p></form></div><div><div class="tank-panel" style="margin-bottom:18px"><div class="tank-kicker">Available fleets</div><h3 style="font:600 27px 'Barlow Condensed',sans-serif;margin:0 0 8px">Find a naval room</h3><p style="color:var(--tank-muted);font-size:12px;line-height:1.8;margin:0">Open naval rooms are listed here. Join requests apply to player-created rooms. Demo rooms are view-only.</p><button class="tank-button secondary" id="refresh-rooms" type="button" style="margin-top:17px">Refresh Rooms</button><p class="tank-status" id="rooms-status" role="status"></p></div><div class="tank-room-list" id="room-list"><div class="tank-empty">Naval rooms will appear here after the database is connected.</div></div></div></div></section>
 <section class="tank-section" id="requests"><div class="tank-section-heading"><div><div class="tank-kicker">Fleet management</div><h2>Join Requests</h2><p>Your outgoing requests and requests awaiting your decision.</p></div></div><div id="request-list" class="tank-room-list"><div class="tank-empty">Join requests will appear here after the database is connected.</div></div><p class="tank-status" id="requests-status" role="status"></p></section>
 <section class="tank-section" id="scoreboard"><div class="tank-section-heading"><div><div class="tank-kicker">Room results</div><h2 id="scoreboard-title">Room Scoreboard</h2><p>Open a room scoreboard to see its crew results.</p></div><button class="tank-button secondary" id="refresh-scores" type="button" disabled>Refresh Scores</button></div><div class="tank-table-wrap"><table class="tank-table"><thead><tr><th>Player ID</th><th>Points</th><th>Kills</th><th>Deaths</th><th>Updated</th></tr></thead><tbody id="scoreboard-body"><tr><td colspan="5">Room scores will appear here after the database is connected.</td></tr></tbody></table></div><p class="tank-status" id="scores-status" role="status"></p></section>
 <section class="tank-section" id="vehicles"><div class="tank-section-heading"><div><div class="tank-kicker">Naval database</div><h2>Ship Index</h2><p>Browse naval vessels by name, nation, and class.</p></div></div><div class="tank-toolbar"><input id="vehicle-search" type="search" placeholder="Search ships or nation…" aria-label="Search ships"><select id="vehicle-filter" aria-label="Filter ship category"><option value="all">All ships</option></select></div><div id="vehicle-grid" class="tank-grid"><div class="tank-empty">Ship entries will appear here after the database is connected.</div></div><p class="tank-status" id="vehicles-status" role="status"></p></section>
 <section class="tank-section" id="guides"><div class="tank-section-heading"><div><div class="tank-kicker">Knowledge / Tactics</div><h2>Fleet Guides</h2><p>A field manual for naval engagements.</p></div></div><div id="guide-grid" class="tank-grid"><div class="tank-empty">Fleet guides will appear here after the database is connected.</div></div><p class="tank-status" id="guides-status" role="status"></p></section>
 <section class="tank-section" id="tank-showcase"><div class="tank-section-heading"><div><div class="tank-kicker">Legends / Naval Forces</div><h2>Ship Showcase</h2><p>Featured warships and their roles at sea.</p></div><span class="tank-pill gold">Featured Ships</span></div><div class="tank-showcase" aria-roledescription="carousel" aria-label="Featured ships"><div class="tank-showcase-track"><article class="tank-slide is-active" aria-hidden="false"><img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1800&q=85" alt="USS Iowa at sea"><div class="tank-slide-shade"></div><div class="tank-slide-info"><span class="tank-kicker">United States / Battleship</span><h3>USS Iowa</h3><p>A fast battleship known for heavy guns, strong protection, and fleet command.</p><span class="tank-slide-number">01 / 05</span></div></article><article class="tank-slide " aria-hidden="true"><img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1800&q=85" alt="HMS Warspite at sea"><div class="tank-slide-shade"></div><div class="tank-slide-info"><span class="tank-kicker">United Kingdom / Battleship</span><h3>HMS Warspite</h3><p>A Queen Elizabeth class battleship celebrated for its service across two world wars.</p><span class="tank-slide-number">02 / 05</span></div></article><article class="tank-slide " aria-hidden="true"><img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1800&q=85" alt="IJN Yamato at sea"><div class="tank-slide-shade"></div><div class="tank-slide-info"><span class="tank-kicker">Japan / Battleship</span><h3>IJN Yamato</h3><p>A heavily armed battleship built around the largest naval guns ever mounted at sea.</p><span class="tank-slide-number">03 / 05</span></div></article><article class="tank-slide " aria-hidden="true"><img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1800&q=85" alt="Bismarck at sea"><div class="tank-slide-shade"></div><div class="tank-slide-info"><span class="tank-kicker">Germany / Battleship</span><h3>Bismarck</h3><p>A powerful battleship designed for long-range operations in the Atlantic.</p><span class="tank-slide-number">04 / 05</span></div></article><article class="tank-slide " aria-hidden="true"><img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1800&q=85" alt="USS Enterprise at sea"><div class="tank-slide-shade"></div><div class="tank-slide-info"><span class="tank-kicker">United States / Aircraft Carrier</span><h3>USS Enterprise</h3><p>A pioneering carrier whose air wing projected naval power across the Pacific.</p><span class="tank-slide-number">05 / 05</span></div></article></div></div><p class="tank-status" id="tank-showcase-status" aria-live="polite"></p></section>
-</main><footer class="tank-footer"><a href="index.html">Adamantium</a> &nbsp; / &nbsp; Naval Forces</footer></div><script src="script.js"></script><script>
-'use strict';
-const $ = selector => document.querySelector(selector);
-$('#create-room-button').disabled = true;
-$('#refresh-scores').disabled = true;
-$('#create-room-button').addEventListener('click', () => {
-  $('#create-room-status').textContent = 'Connect the naval database before creating rooms.';
+</main><footer class="tank-footer"><a href="index.html">Adamantium</a> &nbsp; / &nbsp; Naval Forces</footer></div><script src="script.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+"use strict";
+
+const SUPABASE_URL = "https://wxxqsoumrdfbuosowyki.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_2pdiD1MUA5SrOCKI8LoQgQ_T7ouSuQy";
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let currentUser = null;
+let selectedRoomId = null;
+let roomsCache = [];
+let requestsCache = [];
+
+const $ = (selector) => document.querySelector(selector);
+
+function setStatus(selector, message, kind = "") {
+  const element = $(selector);
+  if (!element) return;
+  element.textContent = message;
+  element.className = "tank-status" + (kind ? " " + kind : "");
+}
+
+function makeElement(tag, className = "", text) {
+  const element = document.createElement(tag);
+  if (className) element.className = className;
+  if (text !== undefined) element.textContent = text;
+  return element;
+}
+
+function showEmpty(container, message) {
+  container.replaceChildren(makeElement("div", "tank-empty", message));
+}
+
+function shortId(value) {
+  return value ? String(value).slice(0, 8) + "…" : "Unknown";
+}
+
+function addRoomButton(container, label, handler, secondary = false) {
+  const button = makeElement(
+    "button",
+    "tank-button" + (secondary ? " secondary" : ""),
+    label
+  );
+  button.type = "button";
+  button.addEventListener("click", handler);
+  container.appendChild(button);
+}
+
+function canUseRooms() {
+  if (!currentUser) {
+    window.location.href = "login.html?next=ships.html";
+    return false;
+  }
+  return true;
+}
+
+async function loadAircraft() {
+  const grid = $("#vehicle-grid");
+  grid.replaceChildren(makeElement("div", "tank-empty", "Loading ships…"));
+  let aircraft = [];
+  const sourceTables = [];
+  let loadedTable = false;
+  let lastError = null;
+
+  for (const table of ["naval_vessels"]) {
+    const result = await db.from(table).select("*");
+    if (result.error) {
+      lastError = result.error;
+      if (result.error.code === "PGRST205" || result.error.code === "42P01") continue;
+      continue;
+    }
+    loadedTable = true;
+    if (result.data?.length) {
+      sourceTables.push(table);
+      aircraft.push(...result.data);
+    }
+  }
+
+  if (!loadedTable && lastError) {
+    showEmpty(grid, "Ships could not be loaded.");
+    setStatus("#vehicles-status", lastError.message, "error");
+    return;
+  }
+
+  const valueFor = (item, keys) => {
+    const key = keys.find(candidate => item[candidate] !== undefined && item[candidate] !== null && item[candidate] !== "");
+    return key ? item[key] : "";
+  };
+  const seenAircraft = new Set();
+  aircraft = aircraft.filter(item => {
+    const name = String(valueFor(item, ["name", "ship_name", "vessel_name", "vehicle_name", "model", "designation"]) || "").toLowerCase();
+    if (!name || seenAircraft.has(name)) return false;
+    seenAircraft.add(name);
+    return true;
+  });
+  const categories = [...new Set(aircraft.map(item =>
+    valueFor(item, ["category", "type", "role", "class"])
+  ).filter(Boolean))].sort();
+  const filter = $("#vehicle-filter");
+  filter.replaceChildren(new Option("All ships", "all"));
+  categories.forEach(category => filter.add(new Option(category, category)));
+
+  function renderAircraft() {
+    const term = $("#vehicle-search").value.trim().toLowerCase();
+    const category = filter.value;
+    const matches = aircraft.filter(item => {
+      const itemCategory = valueFor(item, ["category", "type", "role", "class"]);
+      return (category === "all" || itemCategory === category) &&
+        JSON.stringify(item).toLowerCase().includes(term);
+    });
+
+    grid.replaceChildren();
+    if (!matches.length) {
+      showEmpty(grid, aircraft.length
+        ? "No ships match that search."
+        : "No ship records have been added yet.");
+      return;
+    }
+
+    matches.forEach(item => {
+      const name = valueFor(item, ["name", "ship_name", "vessel_name", "vehicle_name", "model", "designation"]);
+      const nation = valueFor(item, ["nation", "country", "nation_name"]);
+      const itemCategory = valueFor(item, ["category", "type", "role", "class"]);
+      const description = valueFor(item, ["description", "overview", "specifications", "details"]);
+      const card = makeElement("article", "tank-card");
+      const top = makeElement("div", "tank-card-top");
+      top.append(
+        makeElement("span", "tank-tag", itemCategory || "SHIP"),
+        makeElement("span", "tank-pill", nation || "Ship")
+      );
+      card.append(
+        top,
+        makeElement("h3", "", name || "Unnamed ship")
+      );
+      if (description) card.appendChild(makeElement("p", "", description));
+
+      const detailKeys = new Set([
+        "id", "name", "aircraft_name", "vehicle_name", "model", "designation",
+        "nation", "country", "nation_name", "category", "type", "role", "class",
+        "description", "overview", "specifications", "details", "created_at", "updated_at"
+      ]);
+      Object.entries(item).forEach(([key, value]) => {
+        if (detailKeys.has(key) || value === null || value === "") return;
+        const label = key.replace(/_/g, " ").replace(/\b\w/g, letter => letter.toUpperCase());
+        const displayValue = typeof value === "object" ? JSON.stringify(value) : String(value);
+        card.appendChild(makeElement("p", "tank-room-meta", label + ": " + displayValue));
+      });
+      card.appendChild(makeElement("div", "tank-card-footer", "DATABASE RECORD"));
+      grid.appendChild(card);
+    });
+  }
+
+  $("#vehicle-search").addEventListener("input", renderAircraft);
+  filter.addEventListener("change", renderAircraft);
+  renderAircraft();
+  setStatus("#vehicles-status", aircraft.length + " ships loaded" + (sourceTables.length ? " from " + sourceTables.join(" and ") + "." : "."));
+}
+
+function renderGuideContent(content) {
+  const body = document.createElement("div");
+  body.className = "tank-guide-content";
+  const parts = (content || "").split(/(<\/?h2>|<\/?strong>|<\/?p>)/gi);
+  let current = body;
+  let paragraph = null;
+  let heading = null;
+  let bold = false;
+
+  parts.forEach(part => {
+    const tag = part.toLowerCase();
+    if (tag === "<h2>") {
+      heading = document.createElement("h4");
+      current = heading;
+    } else if (tag === "</h2>") {
+      if (heading) body.appendChild(heading);
+      heading = null;
+      current = body;
+    } else if (tag === "<p>") {
+      paragraph = document.createElement("p");
+      current = paragraph;
+    } else if (tag === "</p>") {
+      if (paragraph) body.appendChild(paragraph);
+      paragraph = null;
+      current = body;
+    } else if (tag === "<strong>") {
+      bold = true;
+    } else if (tag === "</strong>") {
+      bold = false;
+    } else if (part) {
+      const text = document.createTextNode(part);
+      if (bold) {
+        const strong = document.createElement("strong");
+        strong.appendChild(text);
+        current.appendChild(strong);
+      } else {
+        current.appendChild(text);
+      }
+    }
+  });
+
+  if (heading) body.appendChild(heading);
+  if (paragraph) body.appendChild(paragraph);
+  if (!body.childNodes.length && content) body.textContent = content;
+  return body;
+}
+
+async function loadGuides() {
+  const grid = $("#guide-grid");
+  grid.replaceChildren(makeElement("div", "tank-empty", "Loading guide…"));
+
+  const { data, error } = await db
+    .from("guides")
+    .select("id, title, content, author_id, author_name")
+    .order("id", { ascending: false });
+
+  if (error) {
+    showEmpty(grid, "Guide could not be loaded.");
+    setStatus("#guides-status", error.message, "error");
+    return;
+  }
+
+  const navalGuideTitlePattern = /\b(naval|ship|fleet|maritime|sea)\b/i;
+  const guide = (data ?? []).find(item =>
+    navalGuideTitlePattern.test(item.title || "")
+  );
+
+  grid.replaceChildren();
+  if (!guide) {
+    showEmpty(grid, "No naval guide has been published yet.");
+    setStatus("#guides-status", "No naval guide records were found.");
+    return;
+  }
+
+  const card = makeElement("article", "tank-card");
+  card.append(
+    makeElement("div", "tank-kicker", "FIELD MANUAL"),
+    makeElement("h3", "", guide.title || "Untitled guide"),
+    renderGuideContent(guide.content),
+    makeElement("div", "tank-card-footer", "GUIDE #" + guide.id + " · AUTHOR " + (guide.author_name || "Simon Riley"))
+  );
+  grid.appendChild(card);
+  setStatus("#guides-status", "1 guide loaded.");
+}
+
+async function createRoom() {
+  if (!canUseRooms()) return;
+
+  const button = $("#create-room-button");
+  const name = $("#room-name").value.trim();
+  if (!name) {
+    $("#room-name").reportValidity();
+    return;
+  }
+
+  button.disabled = true;
+  setStatus("#create-room-status", "Creating room…");
+
+  const { data, error } = await db
+    .from("naval_rooms")
+    .insert({
+      name,
+      owner_id: currentUser.id,
+      mode: $("#room-mode").value,
+      team_size: Number($("#team-size").value),
+      status: "open"
+    })
+    .select("id")
+    .single();
+
+  button.disabled = false;
+  if (error) {
+    setStatus("#create-room-status", error.message, "error");
+    return;
+  }
+
+  $("#room-name").value = "";
+  setStatus("#create-room-status", "Room created successfully.", "success");
+  await loadRooms();
+  if (data?.id) {
+    await openScoreboard(data.id, name);
+    $("#scoreboard").scrollIntoView({ behavior: "smooth" });
+  }
+}
+
+async function loadRooms() {
+  const list = $("#room-list");
+  list.replaceChildren(makeElement("div", "tank-empty", "Loading naval rooms…"));
+
+  const { data, error } = await db
+    .from("naval_rooms")
+    .select("id, name, owner_id, mode, team_size, status, created_at")
+    .neq("status", "closed")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    showEmpty(list, "Naval rooms could not be loaded.");
+    setStatus("#rooms-status", error.message, "error");
+    return;
+  }
+
+  roomsCache = data ?? [];
+  list.replaceChildren();
+  if (!roomsCache.length) {
+    showEmpty(list, "No open naval rooms yet.");
+    setStatus("#rooms-status", "Create a room to start a naval lobby.");
+    return;
+  }
+
+  roomsCache.forEach(room => {
+    const card = makeElement("article", "tank-room");
+    const main = makeElement("div", "tank-room-main");
+    const info = makeElement("div");
+    info.append(
+      makeElement("span", "tank-pill gold", (room.status || "open").replace("_", " ")),
+      makeElement("h3", "", room.name || "Naval room"),
+      makeElement("div", "tank-room-meta",
+        (room.mode || "Naval") + " · " + room.team_size +
+        " players · Owner " + shortId(room.owner_id))
+    );
+    main.appendChild(info);
+    card.appendChild(main);
+
+    const actions = makeElement("div", "tank-room-actions");
+    addRoomButton(actions, "View Scoreboard",
+      () => openScoreboard(room.id, room.name), true);
+
+    if (currentUser && room.owner_id === currentUser.id) {
+      const ownRequests = requestsCache.filter(request =>
+        request.room_id === room.id && request.status === "pending"
+      );
+      if (ownRequests.length) {
+        actions.appendChild(makeElement("span", "tank-pill",
+          ownRequests.length + " PENDING REQUEST(S)"));
+      }
+      addRoomButton(actions, "Delete Room", () => deleteRoom(room));
+    } else if (currentUser && !/^DEMO\b/i.test(room.name || "")) {
+      const ownRequest = requestsCache.find(request =>
+        request.room_id === room.id && request.requester_id === currentUser.id
+      );
+      if (ownRequest) {
+        actions.appendChild(makeElement("span", "tank-pill",
+          "REQUEST " + ownRequest.status.toUpperCase()));
+      } else {
+        addRoomButton(actions, "Request to Join",
+          () => requestToJoin(room.id));
+      }
+    } else if (!/^DEMO\b/i.test(room.name || "")) {
+      actions.appendChild(makeElement("span", "tank-pill", "SIGN IN TO JOIN"));
+    }
+
+    card.appendChild(actions);
+    list.appendChild(card);
+  });
+
+  setStatus("#rooms-status", roomsCache.length + " naval room(s) loaded from Supabase.");
+}
+
+async function deleteRoom(room) {
+  if (!currentUser || room.owner_id !== currentUser.id) {
+    setStatus("#rooms-status", "You can only delete your own rooms.", "error");
+    return;
+  }
+  if (!confirm(`Delete "${room.name}"? This will also delete its requests and scores.`)) {
+    return;
+  }
+
+  const { error } = await db
+    .from("naval_rooms")
+    .delete()
+    .eq("id", room.id)
+    .eq("owner_id", currentUser.id);
+
+  if (error) {
+    setStatus("#rooms-status", error.message, "error");
+    return;
+  }
+
+  if (selectedRoomId === room.id) {
+    selectedRoomId = null;
+    $("#scoreboard-body").replaceChildren();
+    $("#scoreboard-title").textContent = "Room Scoreboard";
+    $("#refresh-scores").disabled = true;
+  }
+  setStatus("#rooms-status", "Room deleted successfully.", "success");
+  await loadRequests();
+  await loadRooms();
+}
+
+async function requestToJoin(roomId) {
+  if (!canUseRooms()) return;
+  const alreadyRequested = requestsCache.some(request =>
+    request.room_id === roomId && request.requester_id === currentUser.id
+  );
+  if (alreadyRequested) {
+    setStatus("#rooms-status", "You already have a request for this room.");
+    return;
+  }
+
+  const { error } = await db.from("naval_room_requests").insert({
+    room_id: roomId,
+    requester_id: currentUser.id,
+    status: "pending"
+  });
+  if (error) {
+    setStatus("#rooms-status", error.message, "error");
+    return;
+  }
+
+  setStatus("#rooms-status", "Join request sent.", "success");
+  await loadRequests();
+  await loadRooms();
+}
+
+async function loadRequests() {
+  const list = $("#request-list");
+  if (!currentUser) {
+    requestsCache = [];
+    showEmpty(list, "Sign in to view your join requests.");
+    return;
+  }
+
+  list.replaceChildren(makeElement("div", "tank-empty", "Loading requests…"));
+  const { data, error } = await db
+    .from("naval_room_requests")
+    .select("id, room_id, requester_id, status, created_at")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    showEmpty(list, "Join requests could not be loaded.");
+    setStatus("#requests-status", error.message, "error");
+    return;
+  }
+
+  const roomsById = new Map(roomsCache.map(room => [room.id, room]));
+  requestsCache = (data ?? []).filter(request => {
+    const room = roomsById.get(request.room_id);
+    return !room || !/^DEMO\b/i.test(room.name || "");
+  });
+  list.replaceChildren();
+  requestsCache.forEach(request => {
+    const room = roomsById.get(request.room_id);
+    const isOwner = room && room.owner_id === currentUser.id;
+    const isRequester = request.requester_id === currentUser.id;
+    if (!isOwner && !isRequester) return;
+
+    const card = makeElement("article", "tank-room");
+    card.append(
+      makeElement("h3", "", room?.name || "Naval room " + shortId(request.room_id)),
+      makeElement("div", "tank-room-meta",
+        (isOwner ? "Requested by " + shortId(request.requester_id) : "Your request") +
+        " · " + request.status.toUpperCase())
+    );
+
+    const actions = makeElement("div", "tank-room-actions");
+    if (isOwner && request.status === "pending") {
+      addRoomButton(actions, "Accept",
+        () => respondToRequest(request.id, "accepted"));
+      addRoomButton(actions, "Decline",
+        () => respondToRequest(request.id, "declined"), true);
+    }
+    if (room) {
+      addRoomButton(actions, "Open Scoreboard",
+        () => openScoreboard(room.id, room.name), true);
+    }
+    card.appendChild(actions);
+    list.appendChild(card);
+  });
+
+  if (!list.children.length) showEmpty(list, "No join requests for your account.");
+  setStatus("#requests-status", requestsCache.length + " request(s) loaded.");
+}
+
+async function respondToRequest(requestId, status) {
+  if (!canUseRooms()) return;
+  const { error } = await db
+    .from("naval_room_requests")
+    .update({ status })
+    .eq("id", requestId);
+
+  if (error) {
+    setStatus("#requests-status", error.message, "error");
+    return;
+  }
+
+  setStatus("#requests-status", "Request " + status + ".", "success");
+  await loadRequests();
+  await loadRooms();
+}
+
+async function openScoreboard(roomId, roomName) {
+  selectedRoomId = roomId;
+  $("#scoreboard-title").textContent = (roomName || "Naval room") + " — Scoreboard";
+  $("#refresh-scores").disabled = false;
+  const tbody = $("#scoreboard-body");
+  tbody.replaceChildren();
+  const loading = makeElement("tr");
+  const cell = makeElement("td", "", "Loading stored scores…");
+  cell.colSpan = 5;
+  loading.appendChild(cell);
+  tbody.appendChild(loading);
+
+  const { data, error } = await db
+    .from("naval_room_scores")
+    .select("player_id, player_name, points, kills, deaths, updated_at")
+    .eq("room_id", roomId)
+    .order("points", { ascending: false });
+
+  tbody.replaceChildren();
+  if (error) {
+    const row = makeElement("tr");
+    const errorCell = makeElement("td", "", error.message);
+    errorCell.colSpan = 5;
+    row.appendChild(errorCell);
+    tbody.appendChild(row);
+    setStatus("#scores-status", error.message, "error");
+    return;
+  }
+
+  if (!data?.length) {
+    const row = makeElement("tr");
+    const emptyCell = makeElement("td", "", "No score entries are stored for this room yet.");
+    emptyCell.colSpan = 5;
+    row.appendChild(emptyCell);
+    tbody.appendChild(row);
+    setStatus("#scores-status", "No stored scores were found for this naval room.");
+    return;
+  }
+
+  data.forEach(score => {
+    const row = makeElement("tr");
+    [
+      score.player_name || shortId(score.player_id),
+      score.points,
+      score.kills,
+      score.deaths,
+      score.updated_at ? new Date(score.updated_at).toLocaleString() : "—"
+    ].forEach(value => row.appendChild(makeElement("td", "", String(value ?? "—"))));
+    tbody.appendChild(row);
+  });
+  setStatus("#scores-status", data.length + " stored score row(s) loaded.");
+}
+
+async function loadSession() {
+  try {
+    const { data, error } = await db.auth.getSession();
+    if (error) throw error;
+    currentUser = data.session?.user ?? null;
+    $("#auth-indicator").textContent = currentUser ? "Signed In" : "Sign In Required";
+    $("#create-room-button").disabled = false;
+
+    db.auth.onAuthStateChange((_event, session) => {
+      currentUser = session?.user ?? null;
+      $("#auth-indicator").textContent = currentUser ? "Signed In" : "Sign In Required";
+      $("#create-room-button").disabled = false;
+      loadRequests().then(loadRooms);
+    });
+
+    await Promise.all([loadAircraft(), loadGuides(), loadRooms()]);
+    await loadRequests();
+    await loadRooms();
+    if (!selectedRoomId && roomsCache.length) {
+      await openScoreboard(roomsCache[0].id, roomsCache[0].name);
+    }
+  } catch (error) {
+    $("#auth-indicator").textContent = "Connection Error";
+    setStatus("#rooms-status", error.message, "error");
+    setStatus("#vehicles-status", error.message, "error");
+    setStatus("#guides-status", error.message, "error");
+  }
+}
+
+$("#create-room-button").addEventListener("click", createRoom);
+$("#refresh-rooms").addEventListener("click", async () => {
+  await loadRequests();
+  await loadRooms();
 });
-$('#refresh-rooms').addEventListener('click', () => {
-  $('#rooms-status').textContent = 'Connect the naval database before loading rooms.';
+$("#refresh-scores").addEventListener("click", () => {
+  if (!selectedRoomId) return;
+  const room = roomsCache.find(item => item.id === selectedRoomId);
+  openScoreboard(selectedRoomId, room?.name || "Naval room");
 });
-$('#vehicle-filter').addEventListener('change', () => {});
-$('#vehicle-search').addEventListener('input', () => {});
-$('#refresh-scores').addEventListener('click', () => {
-  $('#scores-status').textContent = 'Connect the naval database before loading scores.';
-});
+
+loadSession();
+
+setInterval(() => {
+  loadRequests().then(loadRooms);
+}, 30000);
+</script>
+<script>
+/* ===== AUTOMATIC TANK SLIDESHOW ===== */
 (() => {
-  const slides = [...document.querySelectorAll('.tank-slide')];
-  let current = 0;
+  const root = document.querySelector(".tank-showcase");
+  if (!root) {
+    console.error("Ship showcase element not found.");
+    return;
+  }
+
+  const slides = Array.from(root.querySelectorAll(".tank-slide"));
+
+  if (slides.length < 2) {
+    console.error("Ship slideshow needs at least two slides.");
+    return;
+  }
+
+  // Prevent accidentally starting the slideshow twice.
+  if (root.dataset.autoSlideshow === "running") return;
+  root.dataset.autoSlideshow = "running";
+
+  let current = slides.findIndex(slide =>
+    slide.classList.contains("is-active")
+  );
+
+  if (current < 0) current = 0;
+
+  function showSlide(index) {
+    current = (index + slides.length) % slides.length;
+
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("is-active", i === current);
+      slide.setAttribute("aria-hidden", String(i !== current));
+    });
+  }
+
+  showSlide(current);
+
   window.setInterval(() => {
-    slides[current].classList.remove('is-active');
-    slides[current].setAttribute('aria-hidden', 'true');
-    current = (current + 1) % slides.length;
-    slides[current].classList.add('is-active');
-    slides[current].setAttribute('aria-hidden', 'false');
+    showSlide(current + 1);
   }, 4000);
+
+  console.log("Ship slideshow started:", slides.length, "slides");
 })();
-$('#rooms-status').textContent = 'Naval database is not connected.';
-$('#requests-status').textContent = 'Naval database is not connected.';
-$('#vehicles-status').textContent = 'Naval database is not connected.';
-$('#guides-status').textContent = 'Naval database is not connected.';
-$('#scores-status').textContent = 'Naval database is not connected.';
 </script></body></html>
