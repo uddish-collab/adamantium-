@@ -371,6 +371,20 @@
       border-color: rgba(189,164,119,.5);
       color: var(--tank-gold);
     }
+    .tank-request-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 14px;
+  border: 1px solid rgba(189, 164, 119, .5);
+  background: transparent;
+  color: var(--tank-gold);
+  font: 700 11px Inter, sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
 
     .tank-auth-actions {
       display: flex;
@@ -728,7 +742,7 @@
       Explore the ground vehicle database, build your crew,
       challenge other rooms, and study the tactics that win battles.
     </p>
-    <a class="tank-button" href="#rooms">Enter Room Lobby &rarr;</a>
+    
   </div>
 </section>
 
@@ -1402,7 +1416,7 @@ async function loadRooms() {
 
       if (ownRequest) {
         actions.appendChild(makeElement(
-          "span", "tank-pill",
+          "span", "tank-request-status",
           "REQUEST " + ownRequest.status.toUpperCase()
         ));
       } else {

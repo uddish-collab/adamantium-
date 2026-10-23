@@ -371,6 +371,20 @@
       border-color: rgba(189,164,119,.5);
       color: var(--tank-gold);
     }
+    .tank-request-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 14px;
+  border: 1px solid rgba(189, 164, 119, .5);
+  background: transparent;
+  color: var(--tank-gold);
+  font: 700 11px Inter, sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
 
     .tank-auth-actions {
       display: flex;
@@ -728,7 +742,7 @@
       Explore aircraft, build your crew,
       challenge flight rooms, and study the tactics that win aerial engagements.
     </p>
-    <a class="tank-button" href="#rooms">Enter Aviation Room Lobby &rarr;</a>
+    
   </div>
 </section>
 
@@ -1321,7 +1335,7 @@ async function loadRooms() {
         request.room_id === room.id && request.status === "pending"
       );
       if (ownRequests.length) {
-        actions.appendChild(makeElement("span", "tank-pill",
+        actions.appendChild(makeElement("span", "tank-pill gold",
           ownRequests.length + " PENDING REQUEST(S)"));
       }
       addRoomButton(actions, "Delete Room", () => deleteRoom(room));
@@ -1330,7 +1344,7 @@ async function loadRooms() {
         request.room_id === room.id && request.requester_id === currentUser.id
       );
       if (ownRequest) {
-        actions.appendChild(makeElement("span", "tank-pill",
+        actions.appendChild(makeElement("span", "tank-request-status",
           "REQUEST " + ownRequest.status.toUpperCase()));
       } else {
         addRoomButton(actions, "Request to Join",
