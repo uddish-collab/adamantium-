@@ -1,94 +1,1647 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#080a0e">
-    <title>Aviation Headquarters | Adamantium</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0c0f">
+  <title>Aviation Command | Adamantium</title>
+  <meta name="description" content="Explore aircraft, flight guides, and aviation community rooms on Adamantium.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Tanks page additions. Homepage stylesheet remains in use. */
+    :root {
+      --tank-bg: #0b0c0f;
+      --tank-panel: #121419;
+      --tank-border: rgba(255,255,255,.11);
+      --tank-gold: #bda477;
+      --tank-muted: #a4a7ad;
+      --tank-white: #f4f1e9;
+    }
+
+    body {
+      background: var(--tank-bg);
+      color: var(--tank-white);
+    }
+
+    .tank-page {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .tank-topbar {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 16px clamp(20px, 5vw, 76px);
+      border-bottom: 1px solid var(--tank-border);
+      background: #0b0c0f;
+    }
+
+    .tank-brand {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 1.7px;
+  white-space: nowrap;
+  color: #f0ede5;
+  text-decoration: none;
+}
+
+.tank-brand span {
+  color: #bda477;
+}
+    .tank-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .tank-nav a {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #c6c7ca;
+      text-decoration: none;
+    }
+
+    .tank-nav a:hover,
+    .tank-nav a.active {
+      color: var(--tank-gold);
+    }
+
+    .tank-hero {
+      min-height: 470px;
+      display: flex;
+      align-items: flex-end;
+      position: relative;
+      background-color: #202326;
+      background-image:
+        linear-gradient(90deg, rgba(7,8,10,.94) 0%, rgba(7,8,10,.63) 47%, rgba(7,8,10,.12) 100%),
+        linear-gradient(0deg, rgba(7,8,10,.85), transparent 65%),
+        url("https://images.unsplash.com/photo-1474302770737-173ee21bab63?auto=format&fit=crop&w=2200&q=85");
+      background-position: center;
+      background-size: cover;
+      border-bottom: 1px solid var(--tank-border);
+    }
+
+    .tank-hero-inner {
+      width: min(1180px, 100%);
+      margin: auto;
+      padding: 72px 28px 64px;
+      position: relative;
+    }
+
+    .tank-eyebrow {
+      color: var(--tank-gold);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin: 0 0 15px;
+    }
+
+    .tank-hero h1 {
+      font: 800 clamp(48px, 8vw, 88px)/.94 "Barlow Condensed", sans-serif;
+      text-transform: uppercase;
+      max-width: 720px;
+      margin: 0;
+      letter-spacing: .5px;
+    }
+
+    .tank-hero p:not(.tank-eyebrow) {
+      color: #d0d0d0;
+      line-height: 1.8;
+      max-width: 540px;
+      font-size: 14px;
+      margin: 22px 0 26px;
+    }
+
+    .tank-button {
+      appearance: none;
+      border: 1px solid var(--tank-gold);
+      background: var(--tank-gold);
+      color: #111;
+      min-height: 42px;
+      padding: 11px 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font: 700 11px Inter, sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .tank-button:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .tank-button.secondary {
+      color: var(--tank-white);
+      background: transparent;
+      border-color: var(--tank-border);
+    }
+
+    .tank-button:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .tank-container {
+      width: min(1180px, 100%);
+      margin: auto;
+      padding: 0 28px;
+    }
+
+    .tank-section {
+      padding: 66px 0;
+      border-bottom: 1px solid var(--tank-border);
+      scroll-margin-top: 24px;
+    }
+
+    .tank-section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .tank-section-heading h2 {
+      font: 700 clamp(30px, 4vw, 44px)/1 "Barlow Condensed", sans-serif;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .tank-section-heading p {
+      color: var(--tank-muted);
+      font-size: 13px;
+      line-height: 1.7;
+      margin: 10px 0 0;
+    }
+
+    .tank-kicker {
+      color: var(--tank-gold);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .tank-panel {
+      background: var(--tank-panel);
+      border: 1px solid var(--tank-border);
+      padding: 22px;
+      min-width: 0;
+    }
+
+    .tank-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .tank-two-col {
+      display: grid;
+      grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .tank-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tank-field label {
+      color: #c4c5c9;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .7px;
+      text-transform: uppercase;
+    }
+
+    .tank-field input,
+    .tank-field select,
+    .tank-field textarea,
+    .tank-toolbar input,
+    .tank-toolbar select {
+      width: 100%;
+      min-width: 0;
+      padding: 12px 13px;
+      color: var(--tank-white);
+      background: #0c0e12;
+      border: 1px solid #30333a;
+      border-radius: 0;
+      font: 13px Inter, sans-serif;
+      outline: none;
+    }
+
+    .tank-field input:focus,
+    .tank-field select:focus,
+    .tank-field textarea:focus,
+    .tank-toolbar input:focus,
+    .tank-toolbar select:focus {
+      border-color: var(--tank-gold);
+    }
+
+    .tank-field select option,
+    .tank-toolbar select option {
+      background: #121419;
+    }
+
+    .tank-toolbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 200px;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .tank-card {
+      padding: 20px;
+      background: var(--tank-panel);
+      border: 1px solid var(--tank-border);
+      min-width: 0;
+    }
+
+    .tank-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .tank-tag {
+      color: var(--tank-gold);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+
+    .tank-card h3 {
+      font: 600 24px/1.1 "Barlow Condensed", sans-serif;
+      margin: 0 0 10px;
+      overflow-wrap: anywhere;
+    }
+
+    .tank-card p {
+      color: var(--tank-muted);
+      font-size: 12px;
+      line-height: 1.8;
+      margin: 0 0 18px;
+      overflow-wrap: anywhere;
+    }
+
+    .tank-card-footer {
+      border-top: 1px solid var(--tank-border);
+      padding-top: 14px;
+      color: #8e929a;
+      font-size: 10px;
+      letter-spacing: .5px;
+      overflow-wrap: anywhere;
+    }
+
+    .tank-room-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .tank-room {
+      background: var(--tank-panel);
+      border: 1px solid var(--tank-border);
+      padding: 19px;
+    }
+
+    .tank-room-main {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+    }
+
+    .tank-room h3 {
+      font: 600 24px "Barlow Condensed", sans-serif;
+      margin: 8px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .tank-room-meta {
+      color: var(--tank-muted);
+      font-size: 11px;
+      line-height: 1.9;
+    }
+
+    .tank-room-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .tank-pill {
+      display: inline-block;
+      padding: 5px 8px;
+      border: 1px solid var(--tank-border);
+      color: #c7c8cc;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .tank-pill.gold {
+      border-color: rgba(189,164,119,.5);
+      color: var(--tank-gold);
+    }
+
+    .tank-status {
+      min-height: 18px;
+      margin: 12px 0 0;
+      color: var(--tank-muted);
+      font-size: 12px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+
+    .tank-status.error {
+      color: #ff9c9c;
+    }
+
+    .tank-status.success {
+      color: #a6d9b0;
+    }
+
+    .tank-empty {
+      border: 1px dashed #383a40;
+      padding: 25px;
+      color: var(--tank-muted);
+      font-size: 13px;
+      line-height: 1.8;
+      grid-column: 1 / -1;
+    }
+
+    .tank-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--tank-border);
+    }
+
+    .tank-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 500px;
+      font-size: 12px;
+      text-align: left;
+    }
+
+    .tank-table th {
+      background: #17191e;
+      color: var(--tank-gold);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .tank-table th,
+    .tank-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--tank-border);
+    }
+
+    .tank-table td {
+      color: #dedfe2;
+    }
+
+    .tank-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .tank-table td:first-child {
+      font-weight: 600;
+    }
+
+    .tank-footer {
+      padding: 28px;
+      text-align: center;
+      color: #777b83;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .tank-footer a {
+      color: var(--tank-gold);
+      text-decoration: none;
+    }
+
+    .tank-loading {
+      color: var(--tank-muted);
+      font-size: 12px;
+      padding: 12px 0;
+    }
+
+    @media (max-width: 800px) {
+      .tank-two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .tank-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .tank-hero {
+        min-height: 430px;
+        background-position: 58% center;
+      }
+
+      .tank-nav {
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .tank-topbar {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .tank-nav {
+        gap: 15px;
+      }
+
+      .tank-container {
+        padding: 0 18px;
+      }
+
+      .tank-hero-inner {
+        padding: 55px 20px 44px;
+      }
+
+      .tank-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tank-toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .tank-section {
+        padding: 46px 0;
+      }
+
+      .tank-section-heading,
+      .tank-room-main {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+/* ===== ADAMANTIUM TANK SHOWCASE ===== */
+.tank-showcase {
+  position: relative;
+  overflow: hidden;
+  background: #101216;
+  border: 1px solid var(--tank-border);
+}
+
+.tank-showcase-track {
+  position: relative;
+  min-height: 480px;
+}
+
+.tank-slide {
+  position: absolute;
+  inset: 0;
+  min-height: 480px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(22px);
+  transition:
+    opacity .65s ease,
+    transform .65s ease,
+    visibility .65s;
+}
+
+.tank-slide.is-active {
+  position: relative;
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.tank-slide img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.tank-slide-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(7,8,10,.94), rgba(7,8,10,.45) 58%, rgba(7,8,10,.08)),
+    linear-gradient(0deg, rgba(7,8,10,.82), transparent 65%);
+}
+
+.tank-slide-info {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  min-height: 480px;
+  max-width: 650px;
+  padding: clamp(25px, 5vw, 58px);
+}
+
+.tank-slide-info h3 {
+  margin: 8px 0 12px;
+  color: var(--tank-white);
+  font: 800 clamp(48px, 8vw, 82px)/.95
+        "Barlow Condensed", sans-serif;
+  text-transform: uppercase;
+}
+
+.tank-slide-info p {
+  max-width: 430px;
+  margin: 0 0 24px;
+  color: #d0d0d0;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.tank-slide-number {
+  color: var(--tank-gold);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.tank-showcase-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 20px;
+  background: #111318;
+  border-top: 1px solid var(--tank-border);
+}
+
+.tank-showcase-arrow {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  color: var(--tank-gold);
+  background: transparent;
+  border: 1px solid #45403a;
+  cursor: pointer;
+  font-size: 22px;
+  transition: background .2s ease, color .2s ease;
+}
+
+.tank-showcase-arrow:hover {
+  color: #101010;
+  background: var(--tank-gold);
+}
+
+.tank-showcase-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.tank-showcase-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #555860;
+  cursor: pointer;
+  transition: background .25s ease, transform .25s ease;
+}
+
+.tank-showcase-dot.is-active {
+  background: var(--tank-gold);
+  transform: scale(1.35);
+}
+
+.tank-showcase button:focus-visible {
+  outline: 2px solid var(--tank-gold);
+  outline-offset: 4px;
+}
+
+@media (max-width: 600px) {
+  .tank-showcase-track,
+  .tank-slide,
+  .tank-slide img,
+  .tank-slide-info {
+    min-height: 390px;
+  }
+
+  .tank-slide-info {
+    padding: 25px 20px;
+  }
+
+  .tank-showcase-controls {
+    padding: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tank-slide,
+  .tank-showcase-arrow,
+  .tank-showcase-dot {
+    transition: none;
+  }
+}
+
+  </style>
 </head>
+
 <body data-mode="aviation">
-    <header class="navbar">
-        <a class="logo" href="index.html">ADA<span>MANTIUM</span></a>
-        <nav class="nav-links">
-            <a href="index.html">Overview</a>
-            <a class="active" href="#catalog">Vehicles</a>
-            <a href="#guides">Guides</a>
-            <a href="tanks.html">Tanks</a>
-            <a href="ships.html">Ships</a>
-        </nav>
-        <a class="nav-cta" href="index.html">← MAIN HQ</a>
-    </header>
+<div class="tank-page">
 
-    <main>
-        <section class="mode-hero">
-            <div class="mode-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1474302770737-173ee21bab63?auto=format&fit=crop&w=2000&q=85')"></div>
-            <div class="mode-hero-content">
-                <p class="eyebrow">ADAMANTIUM / AIR FORCES</p>
-                <h1>OWN THE<br><span>SKIES.</span></h1>
-                <p class="hero-text">
-                    Explore aircraft, flight characteristics, aerial combat,
-                    and the principles behind effective manoeuvring.
-                    Your aviation headquarters starts here.
-                </p>
-                <a class="btn-primary" href="#catalog">EXPLORE AIRCRAFT ↓</a>
+  <header class="tank-topbar">
+    <a class="tank-brand" href="index.html">ADA<span>MANTIUM</span></a>
+
+    <nav class="tank-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="#vehicles">Aircraft</a>
+      <a href="#rooms" class="active">Rooms</a>
+      <a href="#guides">Guides</a>
+    </nav>
+
+    <span class="tank-pill gold" id="auth-indicator">Database connection pending</span>
+  </header>
+
+  <!-- AVIATION HERO: page structure follows tanks.html. -->
+  
+<section class="tank-hero">
+  <div class="tank-hero-inner">
+    <p class="tank-eyebrow">Adamantium / Air Forces</p>
+    <h1>Own the<br><span class="gold-text">Skies.</span></h1>
+    <p>
+      Explore aircraft, build your crew,
+      challenge flight rooms, and study the tactics that win aerial engagements.
+    </p>
+    <a class="tank-button" href="#rooms">Enter Aviation Room Lobby &rarr;</a>
+  </div>
+</section>
+
+
+  <main class="tank-container">
+
+    <section class="tank-section" id="rooms">
+      <div class="tank-section-heading">
+        <div>
+          <div class="tank-kicker">Community / Air Forces</div>
+          <h2>Aviation Room Lobby</h2>
+          <p>Create a flight room, request to join another crew, and open its scoreboard.</p>
+        </div>
+        <span class="tank-pill gold">Aviation Database / Ready</span>
+      </div>
+
+      <div class="tank-two-col">
+        <div class="tank-panel">
+          <div class="tank-kicker">Your squad</div>
+          <h3 style="font:600 27px 'Barlow Condensed',sans-serif;margin:0 0 20px">
+            Create a flight room
+          </h3>
+
+          <form id="create-room-form" onsubmit="return false">
+            <div class="tank-field">
+              <label for="room-name">Room name</label>
+              <input id="room-name" maxlength="60" required
+                placeholder="e.g. Steel Division">
             </div>
-        </section>
 
-        <section class="mode-section" id="catalog">
-            <div class="section-label">01 / AIRCRAFT INTELLIGENCE</div>
-            <div class="mode-section-heading">
-                <h2>THE AIRCRAFT <span>CATALOG.</span></h2>
-                <p>Search and filter aircraft categories. Vehicle details will be populated as the database is built.</p>
+            <div class="tank-field">
+              <label for="room-mode">Battle format</label>
+              <select id="room-mode">
+                <option>Realistic Battles</option>
+                <option>Arcade Battles</option>
+                <option>Squad Training</option>
+                <option>Friendly Match</option>
+              </select>
             </div>
 
-            <div class="catalog-tools">
-                <input class="catalog-search" id="vehicle-search" type="search" placeholder="Search aircraft..." aria-label="Search aircraft">
-                <select class="catalog-filter" id="vehicle-filter" aria-label="Filter aircraft by category">
-                    <option value="all">All categories</option>
-                    <option value="fighter">Fighters</option>
-                    <option value="attacker">Attack aircraft</option>
-                    <option value="bomber">Bombers</option>
-                    <option value="other">Other aircraft</option>
-                </select>
+            <div class="tank-field">
+              <label for="team-size">Team size</label>
+              <select id="team-size">
+                <option value="2">2 players</option>
+                <option value="4" selected>4 players</option>
+                <option value="6">6 players</option>
+                <option value="8">8 players</option>
+                <option value="12">12 players</option>
+                <option value="16">16 players</option>
+              </select>
             </div>
 
-            <div class="catalog-grid" id="vehicle-grid"></div>
-            <p class="mode-notice">Catalog status: placeholder entries only. Real aircraft names, specifications, images, and game availability will be added after the database is prepared.</p>
-        </section>
+            <button class="tank-button" type="button" id="create-room-button" disabled>
+              Create Room
+            </button>
+            <p class="tank-status" id="create-room-status" role="status"></p>
+          </form>
+        </div>
 
-        <section class="mode-section" id="guides">
-            <div class="section-label">02 / FLIGHT MANUAL</div>
-            <div class="mode-section-heading">
-                <h2>AIR <span>TACTICS.</span></h2>
-                <p>Dedicated learning areas for aviation combat.</p>
-            </div>
-            <div class="guide-grid">
-                <article class="guide-card">
-                    <span>GUIDE / 001</span>
-                    <h3>FLIGHT FUNDAMENTALS</h3>
-                    <p>Understand basic flight controls, energy, speed, and manoeuvring.</p>
-                </article>
-                <article class="guide-card">
-                    <span>GUIDE / 002</span>
-                    <h3>AERIAL ENGAGEMENTS</h3>
-                    <p>Learn the principles of awareness, positioning, and target tracking.</p>
-                </article>
-                <article class="guide-card">
-                    <span>GUIDE / 003</span>
-                    <h3>AIRCRAFT ROLES</h3>
-                    <p>Explore how aircraft design and loadouts influence combat roles.</p>
-                </article>
-            </div>
-        </section>
-    </main>
+        <div>
+          <div class="tank-panel" style="margin-bottom:18px">
+            <div class="tank-kicker">Available crews</div>
+            <h3 style="font:600 27px 'Barlow Condensed',sans-serif;margin:0 0 8px">
+              Find a flight room
+            </h3>
+            <p style="color:var(--tank-muted);font-size:12px;line-height:1.8;margin:0">
+              Flight rooms will be listed here once the aviation database is connected.
+              Room owners will be able to respond to join requests here.
+            </p>
+            <button class="tank-button secondary" id="refresh-rooms" type="button"
+              style="margin-top:17px">Refresh Rooms</button>
+            <p class="tank-status" id="rooms-status" role="status"></p>
+          </div>
 
-    <footer class="site-footer">
-        <a class="logo" href="index.html">ADA<span>MANTIUM</span></a>
-        <p>Fan-made project. Not affiliated with Gaijin Entertainment.</p>
-        <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">BACK TO TOP ↑</a>
-    </footer>
+          <div class="tank-room-list" id="room-list">
+            <div class="tank-empty">Flight rooms will appear here after the aviation database is connected.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tank-section" id="requests">
+      <div class="tank-section-heading">
+        <div>
+          <div class="tank-kicker">Squad management</div>
+          <h2>Join Requests</h2>
+          <p>Your outgoing requests and requests awaiting your decision.</p>
+        </div>
+      </div>
+      <div id="request-list" class="tank-room-list">
+        <div class="tank-empty">Join requests will appear here after the aviation database is connected.</div>
+      </div>
+      <p class="tank-status" id="requests-status" role="status"></p>
+    </section>
+
+    <section class="tank-section" id="scoreboard">
+      <div class="tank-section-heading">
+        <div>
+          <div class="tank-kicker">Room results</div>
+          <h2 id="scoreboard-title">Room Scoreboard</h2>
+          <p>Flight room scores will appear here after the aviation database is connected.</p>
+        </div>
+        <button class="tank-button secondary" id="refresh-scores" type="button" disabled>
+          Refresh Scores
+        </button>
+      </div>
+
+      <div class="tank-table-wrap">
+        <table class="tank-table">
+          <thead>
+            <tr>
+              <th>Player ID</th>
+              <th>Points</th>
+              <th>Kills</th>
+              <th>Deaths</th>
+              <th>Updated</th>
+            </tr>
+          </thead>
+          <tbody id="scoreboard-body">
+            <tr><td colspan="5">Room scoreboards will appear here after the aviation database is connected.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tank-status" id="scores-status" role="status"></p>
+    </section>
+
+    <section class="tank-section" id="vehicles">
+      <div class="tank-section-heading">
+        <div>
+          <div class="tank-kicker">Aircraft database</div>
+          <h2>Aircraft Index</h2>
+          <p>Aircraft entries will load here after the aviation database is connected.</p>
+        </div>
+      </div>
+
+      <div class="tank-toolbar">
+        <input id="vehicle-search" type="search" placeholder="Search aircraft or nation…"
+          aria-label="Search aircraft">
+        <select id="vehicle-filter" aria-label="Filter aircraft category">
+          <option value="all">All aircraft</option>
+        </select>
+      </div>
+
+      <div id="vehicle-grid" class="tank-grid">
+        <div class="tank-empty">Aircraft entries will appear here after the aviation database is connected.</div>
+      </div>
+      <p class="tank-status" id="vehicles-status" role="status"></p>
+    </section>
+
+    <section class="tank-section" id="guides">
+      <div class="tank-section-heading">
+        <div>
+          <div class="tank-kicker">Knowledge / Tactics</div>
+          <h2>Flight Guides</h2>
+          <p>Flight guides will load here after the aviation database is connected.</p>
+        </div>
+      </div>
+
+      <div id="guide-grid" class="tank-grid">
+        <div class="tank-empty">Aviation guides will appear here after the aviation database is connected.</div>
+      </div>
+      <p class="tank-status" id="guides-status" role="status"></p>
+    </section>
+
+    <section class="tank-section" id="tank-showcase">
+      <div class="tank-section-heading">
+        <div>
+          <div class="tank-kicker">Legends / Aviation</div>
+          <h2>Aircraft Showcase</h2>
+          <p>Featured aircraft and their roles in the air.</p>
+        </div>
+        <span class="tank-pill gold">Featured Aircraft</span>
+      </div>
+
+      <div class="tank-showcase" aria-roledescription="carousel"
+           aria-label="Featured aircraft">
+        <div class="tank-showcase-track">
+
+          <article class="tank-slide is-active"
+                   aria-hidden="false">
+            <img
+              src="https://images.unsplash.com/photo-1474302770737-173ee21bab63?auto=format&fit=crop&w=1800&q=85"
+              alt="Aircraft flying through the sky">
+            <div class="tank-slide-shade"></div>
+            <div class="tank-slide-info">
+              <span class="tank-kicker">United States / Fighter</span>
+              <h3>P-51 Mustang</h3>
+              <p>A long-range fighter known for speed, range, and escort missions.</p>
+              <span class="tank-slide-number">01 / 05</span>
+            </div>
+          </article>
+
+          <article class="tank-slide" aria-hidden="true">
+            <img
+              src="https://images.unsplash.com/photo-1540962351504-03099e0a754b?auto=format&fit=crop&w=1800&q=85"
+              alt="Passenger aircraft in flight">
+            <div class="tank-slide-shade"></div>
+            <div class="tank-slide-info">
+              <span class="tank-kicker">United Kingdom / Fighter</span>
+              <h3>Supermarine Spitfire</h3>
+              <p>A highly manoeuvrable fighter associated with the Battle of Britain.</p>
+              <span class="tank-slide-number">02 / 05</span>
+            </div>
+          </article>
+
+          <article class="tank-slide" aria-hidden="true">
+            <img
+              src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1800&q=85"
+              alt="Aircraft above the clouds">
+            <div class="tank-slide-shade"></div>
+            <div class="tank-slide-info">
+              <span class="tank-kicker">Japan / Carrier Fighter</span>
+              <h3>Mitsubishi A6M Zero</h3>
+              <p>A carrier-based fighter designed for long range and agility.</p>
+              <span class="tank-slide-number">03 / 05</span>
+            </div>
+          </article>
+
+          <article class="tank-slide" aria-hidden="true">
+            <img
+              src="https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=1800&q=85"
+              alt="Aircraft launch against the sky">
+            <div class="tank-slide-shade"></div>
+            <div class="tank-slide-info">
+              <span class="tank-kicker">United States / Strategic Bomber</span>
+              <h3>B-17 Flying Fortress</h3>
+              <p>A strategic bomber built for high-altitude, long-range missions.</p>
+              <span class="tank-slide-number">04 / 05</span>
+            </div>
+          </article>
+
+          <article class="tank-slide" aria-hidden="true">
+            <img
+              src="https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=1800&q=85"
+              alt="Aircraft on an airfield">
+            <div class="tank-slide-shade"></div>
+            <div class="tank-slide-info">
+              <span class="tank-kicker">United States / Multirole Fighter</span>
+              <h3>F-16 Fighting Falcon</h3>
+              <p>A multirole fighter designed for air-to-air and air-to-ground missions.</p>
+              <span class="tank-slide-number">05 / 05</span>
+            </div>
+          </article>
+
+        </div>
+
+        
+        
+      </div>
+      <p class="tank-status" id="tank-showcase-status" aria-live="polite"></p>
+    </section>
+
+  </main>
+
+  <footer class="tank-footer">
+    <a href="index.html">Adamantium</a> &nbsp; / &nbsp; Aviation
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+"use strict";
+
+const SUPABASE_URL = "https://wxxqsoumrdfbuosowyki.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_2pdiD1MUA5SrOCKI8LoQgQ_T7ouSuQy";
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let currentUser = null;
+let selectedRoomId = null;
+let roomsCache = [];
+let requestsCache = [];
+
+const $ = (selector) => document.querySelector(selector);
+
+function setStatus(selector, message, kind = "") {
+  const element = $(selector);
+  if (!element) return;
+  element.textContent = message;
+  element.className = "tank-status" + (kind ? " " + kind : "");
+}
+
+function makeElement(tag, className = "", text) {
+  const element = document.createElement(tag);
+  if (className) element.className = className;
+  if (text !== undefined) element.textContent = text;
+  return element;
+}
+
+function showEmpty(container, message) {
+  container.replaceChildren(makeElement("div", "tank-empty", message));
+}
+
+function shortId(value) {
+  return value ? String(value).slice(0, 8) + "…" : "Unknown";
+}
+
+function addRoomButton(container, label, handler, secondary = false) {
+  const button = makeElement(
+    "button",
+    "tank-button" + (secondary ? " secondary" : ""),
+    label
+  );
+  button.type = "button";
+  button.addEventListener("click", handler);
+  container.appendChild(button);
+}
+
+function canUseRooms() {
+  if (!currentUser) {
+    window.location.href = "login.html?next=aviation.html";
+    return false;
+  }
+  return true;
+}
+
+async function loadAircraft() {
+  const grid = $("#vehicle-grid");
+  grid.replaceChildren(makeElement("div", "tank-empty", "Loading aircraft…"));
+  let aircraft = [];
+  const sourceTables = [];
+  let loadedTable = false;
+  let lastError = null;
+
+  for (const table of ["aircraft", "aviation_aircraft"]) {
+    const result = await db.from(table).select("*");
+    if (result.error) {
+      lastError = result.error;
+      if (result.error.code === "PGRST205" || result.error.code === "42P01") continue;
+      continue;
+    }
+    loadedTable = true;
+    if (result.data?.length) {
+      sourceTables.push(table);
+      aircraft.push(...result.data);
+    }
+  }
+
+  if (!loadedTable && lastError) {
+    showEmpty(grid, "Aircraft could not be loaded.");
+    setStatus("#vehicles-status", lastError.message, "error");
+    return;
+  }
+
+  const valueFor = (item, keys) => {
+    const key = keys.find(candidate => item[candidate] !== undefined && item[candidate] !== null && item[candidate] !== "");
+    return key ? item[key] : "";
+  };
+  const seenAircraft = new Set();
+  aircraft = aircraft.filter(item => {
+    const name = String(valueFor(item, ["name", "aircraft_name", "vehicle_name", "model", "designation"]) || "").toLowerCase();
+    if (!name || seenAircraft.has(name)) return false;
+    seenAircraft.add(name);
+    return true;
+  });
+  const categories = [...new Set(aircraft.map(item =>
+    valueFor(item, ["category", "type", "role", "class"])
+  ).filter(Boolean))].sort();
+  const filter = $("#vehicle-filter");
+  filter.replaceChildren(new Option("All aircraft", "all"));
+  categories.forEach(category => filter.add(new Option(category, category)));
+
+  function renderAircraft() {
+    const term = $("#vehicle-search").value.trim().toLowerCase();
+    const category = filter.value;
+    const matches = aircraft.filter(item => {
+      const itemCategory = valueFor(item, ["category", "type", "role", "class"]);
+      return (category === "all" || itemCategory === category) &&
+        JSON.stringify(item).toLowerCase().includes(term);
+    });
+
+    grid.replaceChildren();
+    if (!matches.length) {
+      showEmpty(grid, aircraft.length
+        ? "No aircraft match that search."
+        : "No aircraft records have been added yet.");
+      return;
+    }
+
+    matches.forEach(item => {
+      const name = valueFor(item, ["name", "aircraft_name", "vehicle_name", "model", "designation"]);
+      const nation = valueFor(item, ["nation", "country", "nation_name"]);
+      const itemCategory = valueFor(item, ["category", "type", "role", "class"]);
+      const description = valueFor(item, ["description", "overview", "specifications", "details"]);
+      const card = makeElement("article", "tank-card");
+      const top = makeElement("div", "tank-card-top");
+      top.append(
+        makeElement("span", "tank-tag", itemCategory || "AIRCRAFT"),
+        makeElement("span", "tank-pill", nation || "Aircraft")
+      );
+      card.append(
+        top,
+        makeElement("h3", "", name || "Unnamed aircraft")
+      );
+      if (description) card.appendChild(makeElement("p", "", description));
+
+      const detailKeys = new Set([
+        "id", "name", "aircraft_name", "vehicle_name", "model", "designation",
+        "nation", "country", "nation_name", "category", "type", "role", "class",
+        "description", "overview", "specifications", "details", "created_at", "updated_at"
+      ]);
+      Object.entries(item).forEach(([key, value]) => {
+        if (detailKeys.has(key) || value === null || value === "") return;
+        const label = key.replace(/_/g, " ").replace(/\b\w/g, letter => letter.toUpperCase());
+        const displayValue = typeof value === "object" ? JSON.stringify(value) : String(value);
+        card.appendChild(makeElement("p", "tank-room-meta", label + ": " + displayValue));
+      });
+      card.appendChild(makeElement("div", "tank-card-footer", "DATABASE RECORD"));
+      grid.appendChild(card);
+    });
+  }
+
+  $("#vehicle-search").addEventListener("input", renderAircraft);
+  filter.addEventListener("change", renderAircraft);
+  renderAircraft();
+  setStatus("#vehicles-status", aircraft.length + " aircraft loaded" + (sourceTables.length ? " from " + sourceTables.join(" and ") + "." : "."));
+}
+
+function renderGuideContent(content) {
+  const body = document.createElement("div");
+  body.className = "tank-guide-content";
+  const parts = (content || "").split(/(<\/?h2>|<\/?strong>|<\/?p>)/gi);
+  let current = body;
+  let paragraph = null;
+  let heading = null;
+  let bold = false;
+
+  parts.forEach(part => {
+    const tag = part.toLowerCase();
+    if (tag === "<h2>") {
+      heading = document.createElement("h4");
+      current = heading;
+    } else if (tag === "</h2>") {
+      if (heading) body.appendChild(heading);
+      heading = null;
+      current = body;
+    } else if (tag === "<p>") {
+      paragraph = document.createElement("p");
+      current = paragraph;
+    } else if (tag === "</p>") {
+      if (paragraph) body.appendChild(paragraph);
+      paragraph = null;
+      current = body;
+    } else if (tag === "<strong>") {
+      bold = true;
+    } else if (tag === "</strong>") {
+      bold = false;
+    } else if (part) {
+      const text = document.createTextNode(part);
+      if (bold) {
+        const strong = document.createElement("strong");
+        strong.appendChild(text);
+        current.appendChild(strong);
+      } else {
+        current.appendChild(text);
+      }
+    }
+  });
+
+  if (heading) body.appendChild(heading);
+  if (paragraph) body.appendChild(paragraph);
+  if (!body.childNodes.length && content) body.textContent = content;
+  return body;
+}
+
+async function loadGuides() {
+  const grid = $("#guide-grid");
+  grid.replaceChildren(makeElement("div", "tank-empty", "Loading guide…"));
+
+  const { data, error } = await db
+    .from("guides")
+    .select("id, title, content, author_id, author_name")
+    .order("id", { ascending: false });
+
+  if (error) {
+    showEmpty(grid, "Guide could not be loaded.");
+    setStatus("#guides-status", error.message, "error");
+    return;
+  }
+
+  const aviationTitlePattern = /\b(aviation|aircraft|air combat|flight|pilot|fighter|bomber|flying)\b/i;
+  const guide = (data ?? []).find(item =>
+    aviationTitlePattern.test(item.title || "")
+  );
+
+  grid.replaceChildren();
+  if (!guide) {
+    showEmpty(grid, "No aviation guide has been published yet.");
+    setStatus("#guides-status", "No aviation guide records were found.");
+    return;
+  }
+
+  const card = makeElement("article", "tank-card");
+  card.append(
+    makeElement("div", "tank-kicker", "FIELD MANUAL"),
+    makeElement("h3", "", guide.title || "Untitled guide"),
+    renderGuideContent(guide.content),
+    makeElement("div", "tank-card-footer", "GUIDE #" + guide.id + " · AUTHOR " + (guide.author_name || "Simon Riley"))
+  );
+  grid.appendChild(card);
+  setStatus("#guides-status", "1 guide loaded.");
+}
+
+async function createRoom() {
+  if (!canUseRooms()) return;
+
+  const button = $("#create-room-button");
+  const name = $("#room-name").value.trim();
+  if (!name) {
+    $("#room-name").reportValidity();
+    return;
+  }
+
+  button.disabled = true;
+  setStatus("#create-room-status", "Creating room…");
+
+  const { data, error } = await db
+    .from("aviation_rooms")
+    .insert({
+      name,
+      owner_id: currentUser.id,
+      mode: $("#room-mode").value,
+      team_size: Number($("#team-size").value),
+      status: "open"
+    })
+    .select("id")
+    .single();
+
+  button.disabled = false;
+  if (error) {
+    setStatus("#create-room-status", error.message, "error");
+    return;
+  }
+
+  $("#room-name").value = "";
+  setStatus("#create-room-status", "Room created successfully.", "success");
+  await loadRooms();
+  if (data?.id) {
+    await openScoreboard(data.id, name);
+    $("#scoreboard").scrollIntoView({ behavior: "smooth" });
+  }
+}
+
+async function loadRooms() {
+  const list = $("#room-list");
+  list.replaceChildren(makeElement("div", "tank-empty", "Loading flight rooms…"));
+
+  const { data, error } = await db
+    .from("aviation_rooms")
+    .select("id, name, owner_id, mode, team_size, status, created_at")
+    .neq("status", "closed")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    showEmpty(list, "Flight rooms could not be loaded.");
+    setStatus("#rooms-status", error.message, "error");
+    return;
+  }
+
+  roomsCache = data ?? [];
+  list.replaceChildren();
+  if (!roomsCache.length) {
+    showEmpty(list, "No open flight rooms yet.");
+    setStatus("#rooms-status", "Create a room to start a flight lobby.");
+    return;
+  }
+
+  roomsCache.forEach(room => {
+    const card = makeElement("article", "tank-room");
+    const main = makeElement("div", "tank-room-main");
+    const info = makeElement("div");
+    info.append(
+      makeElement("span", "tank-pill gold", (room.status || "open").replace("_", " ")),
+      makeElement("h3", "", room.name || "Flight room"),
+      makeElement("div", "tank-room-meta",
+        (room.mode || "Flight") + " · " + room.team_size +
+        " players · Owner " + shortId(room.owner_id))
+    );
+    main.appendChild(info);
+    card.appendChild(main);
+
+    const actions = makeElement("div", "tank-room-actions");
+    addRoomButton(actions, "View Scoreboard",
+      () => openScoreboard(room.id, room.name), true);
+
+    if (currentUser && room.owner_id === currentUser.id) {
+      const ownRequests = requestsCache.filter(request =>
+        request.room_id === room.id && request.status === "pending"
+      );
+      if (ownRequests.length) {
+        actions.appendChild(makeElement("span", "tank-pill",
+          ownRequests.length + " PENDING REQUEST(S)"));
+      }
+      addRoomButton(actions, "Delete Room", () => deleteRoom(room));
+    } else if (currentUser && !/^DEMO\b/i.test(room.name || "")) {
+      const ownRequest = requestsCache.find(request =>
+        request.room_id === room.id && request.requester_id === currentUser.id
+      );
+      if (ownRequest) {
+        actions.appendChild(makeElement("span", "tank-pill",
+          "REQUEST " + ownRequest.status.toUpperCase()));
+      } else {
+        addRoomButton(actions, "Request to Join",
+          () => requestToJoin(room.id));
+      }
+    } else if (!/^DEMO\b/i.test(room.name || "")) {
+      actions.appendChild(makeElement("span", "tank-pill", "SIGN IN TO JOIN"));
+    }
+
+    card.appendChild(actions);
+    list.appendChild(card);
+  });
+
+  setStatus("#rooms-status", roomsCache.length + " flight room(s) loaded from Supabase.");
+}
+
+async function deleteRoom(room) {
+  if (!currentUser || room.owner_id !== currentUser.id) {
+    setStatus("#rooms-status", "You can only delete your own rooms.", "error");
+    return;
+  }
+  if (!confirm(`Delete "${room.name}"? This will also delete its requests and scores.`)) {
+    return;
+  }
+
+  const { error } = await db
+    .from("aviation_rooms")
+    .delete()
+    .eq("id", room.id)
+    .eq("owner_id", currentUser.id);
+
+  if (error) {
+    setStatus("#rooms-status", error.message, "error");
+    return;
+  }
+
+  if (selectedRoomId === room.id) {
+    selectedRoomId = null;
+    $("#scoreboard-body").replaceChildren();
+    $("#scoreboard-title").textContent = "Room Scoreboard";
+    $("#refresh-scores").disabled = true;
+  }
+  setStatus("#rooms-status", "Room deleted successfully.", "success");
+  await loadRequests();
+  await loadRooms();
+}
+
+async function requestToJoin(roomId) {
+  if (!canUseRooms()) return;
+  const alreadyRequested = requestsCache.some(request =>
+    request.room_id === roomId && request.requester_id === currentUser.id
+  );
+  if (alreadyRequested) {
+    setStatus("#rooms-status", "You already have a request for this room.");
+    return;
+  }
+
+  const { error } = await db.from("aviation_room_requests").insert({
+    room_id: roomId,
+    requester_id: currentUser.id,
+    status: "pending"
+  });
+  if (error) {
+    setStatus("#rooms-status", error.message, "error");
+    return;
+  }
+
+  setStatus("#rooms-status", "Join request sent.", "success");
+  await loadRequests();
+  await loadRooms();
+}
+
+async function loadRequests() {
+  const list = $("#request-list");
+  if (!currentUser) {
+    requestsCache = [];
+    showEmpty(list, "Sign in to view your join requests.");
+    return;
+  }
+
+  list.replaceChildren(makeElement("div", "tank-empty", "Loading requests…"));
+  const { data, error } = await db
+    .from("aviation_room_requests")
+    .select("id, room_id, requester_id, status, created_at")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    showEmpty(list, "Join requests could not be loaded.");
+    setStatus("#requests-status", error.message, "error");
+    return;
+  }
+
+  const roomsById = new Map(roomsCache.map(room => [room.id, room]));
+  requestsCache = (data ?? []).filter(request => {
+    const room = roomsById.get(request.room_id);
+    return !room || !/^DEMO\b/i.test(room.name || "");
+  });
+  list.replaceChildren();
+  requestsCache.forEach(request => {
+    const room = roomsById.get(request.room_id);
+    const isOwner = room && room.owner_id === currentUser.id;
+    const isRequester = request.requester_id === currentUser.id;
+    if (!isOwner && !isRequester) return;
+
+    const card = makeElement("article", "tank-room");
+    card.append(
+      makeElement("h3", "", room?.name || "Flight room " + shortId(request.room_id)),
+      makeElement("div", "tank-room-meta",
+        (isOwner ? "Requested by " + shortId(request.requester_id) : "Your request") +
+        " · " + request.status.toUpperCase())
+    );
+
+    const actions = makeElement("div", "tank-room-actions");
+    if (isOwner && request.status === "pending") {
+      addRoomButton(actions, "Accept",
+        () => respondToRequest(request.id, "accepted"));
+      addRoomButton(actions, "Decline",
+        () => respondToRequest(request.id, "declined"), true);
+    }
+    if (room) {
+      addRoomButton(actions, "Open Scoreboard",
+        () => openScoreboard(room.id, room.name), true);
+    }
+    card.appendChild(actions);
+    list.appendChild(card);
+  });
+
+  if (!list.children.length) showEmpty(list, "No join requests for your account.");
+  setStatus("#requests-status", requestsCache.length + " request(s) loaded.");
+}
+
+async function respondToRequest(requestId, status) {
+  if (!canUseRooms()) return;
+  const { error } = await db
+    .from("aviation_room_requests")
+    .update({ status })
+    .eq("id", requestId);
+
+  if (error) {
+    setStatus("#requests-status", error.message, "error");
+    return;
+  }
+
+  setStatus("#requests-status", "Request " + status + ".", "success");
+  await loadRequests();
+  await loadRooms();
+}
+
+async function openScoreboard(roomId, roomName) {
+  selectedRoomId = roomId;
+  $("#scoreboard-title").textContent = (roomName || "Flight room") + " — Scoreboard";
+  $("#refresh-scores").disabled = false;
+  const tbody = $("#scoreboard-body");
+  tbody.replaceChildren();
+  const loading = makeElement("tr");
+  const cell = makeElement("td", "", "Loading stored scores…");
+  cell.colSpan = 5;
+  loading.appendChild(cell);
+  tbody.appendChild(loading);
+
+  const { data, error } = await db
+    .from("aviation_room_scores")
+    .select("player_id, player_name, points, kills, deaths, updated_at")
+    .eq("room_id", roomId)
+    .order("points", { ascending: false });
+
+  tbody.replaceChildren();
+  if (error) {
+    const row = makeElement("tr");
+    const errorCell = makeElement("td", "", error.message);
+    errorCell.colSpan = 5;
+    row.appendChild(errorCell);
+    tbody.appendChild(row);
+    setStatus("#scores-status", error.message, "error");
+    return;
+  }
+
+  if (!data?.length) {
+    const row = makeElement("tr");
+    const emptyCell = makeElement("td", "", "No score entries are stored for this room yet.");
+    emptyCell.colSpan = 5;
+    row.appendChild(emptyCell);
+    tbody.appendChild(row);
+    setStatus("#scores-status", "No stored scores were found for this flight room.");
+    return;
+  }
+
+  data.forEach(score => {
+    const row = makeElement("tr");
+    [
+      score.player_name || shortId(score.player_id),
+      score.points,
+      score.kills,
+      score.deaths,
+      score.updated_at ? new Date(score.updated_at).toLocaleString() : "—"
+    ].forEach(value => row.appendChild(makeElement("td", "", String(value ?? "—"))));
+    tbody.appendChild(row);
+  });
+  setStatus("#scores-status", data.length + " stored score row(s) loaded.");
+}
+
+async function loadSession() {
+  try {
+    const { data, error } = await db.auth.getSession();
+    if (error) throw error;
+    currentUser = data.session?.user ?? null;
+    $("#auth-indicator").textContent = currentUser ? "Signed In" : "Sign In Required";
+    $("#create-room-button").disabled = false;
+
+    db.auth.onAuthStateChange((_event, session) => {
+      currentUser = session?.user ?? null;
+      $("#auth-indicator").textContent = currentUser ? "Signed In" : "Sign In Required";
+      $("#create-room-button").disabled = false;
+      loadRequests().then(loadRooms);
+    });
+
+    await Promise.all([loadAircraft(), loadGuides(), loadRooms()]);
+    await loadRequests();
+    await loadRooms();
+    if (!selectedRoomId && roomsCache.length) {
+      await openScoreboard(roomsCache[0].id, roomsCache[0].name);
+    }
+  } catch (error) {
+    $("#auth-indicator").textContent = "Connection Error";
+    setStatus("#rooms-status", error.message, "error");
+    setStatus("#vehicles-status", error.message, "error");
+    setStatus("#guides-status", error.message, "error");
+  }
+}
+
+$("#create-room-button").addEventListener("click", createRoom);
+$("#refresh-rooms").addEventListener("click", async () => {
+  await loadRequests();
+  await loadRooms();
+});
+$("#refresh-scores").addEventListener("click", () => {
+  if (!selectedRoomId) return;
+  const room = roomsCache.find(item => item.id === selectedRoomId);
+  openScoreboard(selectedRoomId, room?.name || "Flight room");
+});
+
+loadSession();
+
+setInterval(() => {
+  loadRequests().then(loadRooms);
+}, 30000);
+</script>
+<script>
+/* ===== AUTOMATIC TANK SLIDESHOW ===== */
+(() => {
+  const root = document.querySelector(".tank-showcase");
+  if (!root) {
+    console.error("Aircraft showcase element not found.");
+    return;
+  }
+
+  const slides = Array.from(root.querySelectorAll(".tank-slide"));
+
+  if (slides.length < 2) {
+    console.error("Aircraft slideshow needs at least two slides.");
+    return;
+  }
+
+  // Prevent accidentally starting the slideshow twice.
+  if (root.dataset.autoSlideshow === "running") return;
+  root.dataset.autoSlideshow = "running";
+
+  let current = slides.findIndex(slide =>
+    slide.classList.contains("is-active")
+  );
+
+  if (current < 0) current = 0;
+
+  function showSlide(index) {
+    current = (index + slides.length) % slides.length;
+
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("is-active", i === current);
+      slide.setAttribute("aria-hidden", String(i !== current));
+    });
+  }
+
+  showSlide(current);
+
+  window.setInterval(() => {
+    showSlide(current + 1);
+  }, 4000);
+
+  console.log("Aircraft slideshow started:", slides.length, "slides");
+})();
+</script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
 </body>
 </html>
+
+ 

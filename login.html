@@ -168,6 +168,16 @@
     const SUPABASE_URL = "https://wxxqsoumrdfbuosowyki.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_2pdiD1MUA5SrOCKI8LoQgQ_T7ouSuQy";
 
+    const authReturnPage = new URLSearchParams(window.location.search).get("next") === "aviation.html"
+      ? "aviation.html"
+      : "tanks.html";
+
+    if (authReturnPage === "aviation.html") {
+      const backLink = document.querySelector(".back");
+      backLink.href = "aviation.html";
+      backLink.textContent = "← Back to Aviation";
+    }
+
     const db = window.supabase.createClient(
       SUPABASE_URL,
       SUPABASE_ANON_KEY
@@ -228,7 +238,7 @@
 
           if (error) throw error;
 
-          window.location.href = "tanks.html";
+          window.location.href = authReturnPage;
           return;
         }
 
@@ -237,7 +247,7 @@
           password,
           options: {
             emailRedirectTo: window.location.origin +
-              window.location.pathname.replace(/[^/]*$/, "tanks.html")
+              window.location.pathname.replace(/[^/]*$/, authReturnPage)
           }
         });
 
@@ -245,7 +255,7 @@
 
         if (data.session) {
           showMessage("Account created! Taking you to Ground Forces...", "success");
-          window.location.href = "tanks.html";
+          window.location.href = authReturnPage;
           return;
         }
 
@@ -266,7 +276,7 @@
     // If a session already exists, go straight to Ground Forces.
     db.auth.getSession().then(({ data, error }) => {
       if (!error && data.session) {
-        window.location.href = "tanks.html";
+        window.location.href = authReturnPage;
       }
     });
 
