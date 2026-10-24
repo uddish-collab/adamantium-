@@ -2,6 +2,9 @@
 
 **A War Thunder Mobile gaming community hub built for a college software engineering project.**
 
+- **Live website:** [uddish-collab.github.io/adamantium-](https://uddish-collab.github.io/adamantium-/)
+- **GitHub repository:** [uddish-collab/adamantium-](https://github.com/uddish-collab/adamantium-)
+
 Adamantium brings ground, aviation, and naval content together in one dark, military-inspired website. Visitors can browse vehicle catalogs and guides, explore showcases, and view room scoreboards. Signed-in players can use the community room features backed by Supabase.
 
 > Adamantium is an independent fan project for educational use. It is not an official War Thunder or Gaijin Entertainment product and is not affiliated with or endorsed by Gaijin Entertainment.
@@ -37,8 +40,9 @@ The project has three mode pages:
 | Ground forces | `tanks.html` | `vehicles` |
 | Aviation | `aviation.html` | `aircraft` |
 | Naval forces | `ships.html` | `naval_vessels` |
+| Project and team | `team-akagami.html` | Team profiles and downloadable project report |
 
-The site also includes the landing page (`index.html`) and sign-in page (`login.html`).
+The site also includes the landing page (`index.html`) and sign-in page (`login.html`). The project is published as a static site using GitHub Pages.
 
 ## Features
 
@@ -59,6 +63,7 @@ The site also includes the landing page (`index.html`) and sign-in page (`login.
 - Request status display and owner responses where supported by the page.
 - Room-owner controls for eligible rooms.
 - Demo rooms and sample scoreboard rows for presentation.
+- A Team Akagami page with member profiles and links, plus downloadable Word and PDF copies of the project report.
 
 Room access and operations depend on the current Supabase table grants and Row Level Security policies. A button being hidden in the interface is not a substitute for a database policy.
 
@@ -84,8 +89,13 @@ adamantium/
 ├── tanks.html                         # Ground catalog, guides, rooms, and scores
 ├── aviation.html                      # Aircraft catalog, guides, rooms, and scores
 ├── ships.html                         # Naval catalog, guides, rooms, and scores
+├── team-akagami.html                  # Team profiles and project report downloads
 ├── style.css                          # Shared visual styling
 ├── script.js                          # Shared browser-side behavior
+├── Adamantium_Software_Engineering_Project_Report_Draft.docx
+├── Adamantium_Software_Engineering_Project_Report_Draft.pdf
+├── supabase-schema.sql                # Schema reference/export
+├── googleddc2968388aeebe7.html         # Search Console ownership verification
 ├── assets/
 │   ├── gameplay.mp4                   # Home-page gameplay media
 │   ├── tanks/                         # Ground showcase images
@@ -161,7 +171,9 @@ Do not use demo rows to represent real match results. Do not run reset, delete, 
 
 ## Assets
 
-The project's local media is stored under `assets/`, including separate image folders for tanks, aviation, and naval pages. The gameplay video and meme media are also local assets. To replace an image:
+The mode-page slideshows, gameplay video, and meme media are stored locally under `assets/`. The three Team Akagami profile photos are served from the public Supabase Storage bucket `team-photos`, so those images are not stored in the GitHub repository. Public bucket images can be viewed by anyone with their file URLs.
+
+To replace a local slideshow image:
 
 1. Put the new file in the correct mode folder.
 2. Update the matching image path in that mode's HTML.
@@ -173,16 +185,16 @@ Only publish media that you have permission to use. Add attribution where its li
 
 ## Deployment
 
-The website can be hosted on a static hosting service such as GitHub Pages. Deployment requires all referenced HTML, CSS, JavaScript, and asset files to be committed to the selected branch and hosting folder. The static host does not host the PostgreSQL database; the site continues to call Supabase remotely.
+The site is published through GitHub Pages from the `main` branch and repository root. The live project URL is [https://uddish-collab.github.io/adamantium-/](https://uddish-collab.github.io/adamantium-/). The static host serves the front-end files; Supabase continues to provide authentication, PostgreSQL, and profile-photo storage.
 
-Before sharing a deployed URL:
+To publish later changes:
 
-1. Enable static hosting for the repository and select the correct branch and folder containing `index.html`.
-2. Open the published home page and each mode page over HTTPS.
-3. Check that every image and video loads. Relative asset paths should work from the repository's deployed subpath.
-4. Test sign-in, sign-out, room actions, requests, guides, and scoreboards on the deployed domain.
-5. Add the deployed URL to Supabase Auth's allowed site and redirect URL configuration as required by the sign-in flow.
-6. Verify the Supabase project has RLS enabled and that no privileged secret is present in the repository.
+1. Save the updated site files in the project folder.
+2. Commit and push the intended changes to the `main` branch.
+3. Wait for the GitHub Pages deployment to finish, then open the live page and confirm the update.
+4. Check page navigation, mode images, Team Akagami downloads, sign-in, rooms, requests, guides, and scoreboards.
+
+Supabase Auth must allow the live website URL and the redirect destinations used by the sign-in flow. Keep the Search Console HTML verification file in the repository while it is used to verify site ownership. The live database is separate from GitHub Pages; deploying HTML does not deploy or migrate the Supabase database.
 
 ## Troubleshooting
 
