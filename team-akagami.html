@@ -59,12 +59,91 @@
     .list-item{position:relative;padding-left:20px}
     .list-item:before{content:'•';position:absolute;left:4px;color:var(--gold)}
     .list-item.numbered:before{content:'›'}
-    .members-card{min-height:210px;display:grid;place-items:center;text-align:center}
-    .members-placeholder{max-width:640px}
-    .members-placeholder .mark{font-size:34px;color:var(--gold)}
-    .members-placeholder h3{color:var(--ink);font-size:22px;margin:8px 0}
-    .members-placeholder p{color:var(--muted);margin:0}
-
+    .akagami-team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+    .akagami-member-card {
+      position: relative;
+      isolation: isolate;
+      min-height: 430px;
+      padding: 34px 26px 30px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(145deg, #15191d 0%, #0b0d10 72%);
+      border: 1px solid rgba(220, 20, 60, .24);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.035), 0 18px 40px rgba(0,0,0,.24);
+      transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease, background .35s ease;
+    }
+    .akagami-member-card::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 0 0 auto;
+      height: 3px;
+      background: #dc143c;
+      transform: scaleX(.18);
+      transform-origin: left;
+      opacity: .72;
+      transition: transform .35s ease, opacity .35s ease;
+    }
+    .akagami-member-card::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: 210px;
+      height: 210px;
+      right: -125px;
+      bottom: -135px;
+      border-radius: 50%;
+      background: rgba(220,20,60,.09);
+      filter: blur(3px);
+      transition: transform .4s ease, background .4s ease;
+    }
+    .akagami-member-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(220,20,60,.9);
+      background: linear-gradient(145deg, #19191d 0%, #0b0d10 72%);
+      box-shadow: 0 22px 50px rgba(0,0,0,.42), 0 0 28px rgba(220,20,60,.16);
+    }
+    .akagami-member-card:hover::before { transform: scaleX(1); opacity: 1; }
+    .akagami-member-card:hover::after { transform: scale(1.35); background: rgba(220,20,60,.15); }
+    .akagami-member-photo {
+      position: relative;
+      width: 124px;
+      height: 124px;
+      flex: 0 0 124px;
+      margin: 0 auto 21px;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      border: 2px solid rgba(220,20,60,.78);
+      border-radius: 50%;
+      background: radial-gradient(circle, #242027 0%, #101114 72%);
+      box-shadow: 0 0 0 6px rgba(220,20,60,.07), 0 0 24px rgba(220,20,60,.13);
+      transition: box-shadow .35s ease, transform .35s ease;
+    }
+    .akagami-member-card:hover .akagami-member-photo {
+      transform: scale(1.04);
+      box-shadow: 0 0 0 7px rgba(220,20,60,.12), 0 0 30px rgba(220,20,60,.3);
+    }
+    .akagami-member-photo img { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .akagami-member-photo .photo-fallback { display: none; color: #dc143c; font-size: 13px; font-weight: 800; letter-spacing: .16em; }
+    .akagami-member-photo.missing .photo-fallback { display: block; }
+    .akagami-member-card h3 { margin: 0 0 18px; color: var(--ink); font-size: 22px; letter-spacing: .04em; text-transform: uppercase; }
+    .akagami-member-links { display: flex; justify-content: center; gap: 24px; margin: 0 0 22px; }
+    .akagami-member-links span { color: #c5c8cd; font-size: 12px; letter-spacing: .04em; }
+    .akagami-member-links a { margin-left: 5px; color: #dc143c; text-decoration: none; font-size: 16px; transition: color .2s ease, text-shadow .2s ease; }
+    .akagami-member-links a:hover { color: #ff536f; text-shadow: 0 0 12px rgba(255,83,111,.55); }
+    .akagami-member-email { margin-top: auto; padding-top: 18px; color: #c5c8cd; font-size: 12px; text-decoration: none; overflow-wrap: anywhere; }
+    .akagami-member-email .mail-icon { margin-right: 7px; color: #dc143c; }
+    .akagami-member-email:hover { color: #ff536f; }
+    @media(max-width:900px) { .akagami-team-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    @media(max-width:580px) { .akagami-team-grid { grid-template-columns: 1fr; } .akagami-member-card { min-height: 390px; } }
     @media(max-width:640px){.ta-nav{align-items:flex-start;flex-direction:column}.ta-links{gap:14px}.ta-hero{padding-top:42px}.report-card table{font-size:12px}}
   </style>
 </head>
@@ -84,7 +163,7 @@
   </div></section>
   <nav class="section-nav" aria-label="Page sections"><a href="#report">01 / Core Logic</a><a href="#members">02 / Crew</a></nav>
   <main>
-    <section id="report" class="content-section"><div class="section-head"><p class="eyebrow">01 / System Diagnostics</p><h2>Architecture Analytics</h2></div><article class="report-card"><p><strong>ADAMANTIUM</strong><strong> GAMING HUB</strong></p>
+    <section id="report" class="content-section"><div class="section-head"><p class="eyebrow">01 / Core Logic</p><h2>The Report</h2></div><article class="report-card"><p><strong>ADAMANTIUM</strong><strong> GAMING HUB</strong></p>
 <h1 class="report-cover-title"><strong>Software Engineering Project Report</strong></h1>
 <p class="report-subtitle">War Thunder Mobile Community Hub</p>
 <p><strong>By TEAM AKAGAMI</strong></p>
@@ -206,8 +285,33 @@
 <p class="list-item">MDN Web Docs, HTML, CSS, and JavaScript references. https://developer.mozilla.org/</p>
 <p class="list-item">War Thunder Mobile official website. Cite the exact page used for game descriptions or images: [https://wtmobile.com/en/].</p>
 <p class="list-item">Adamantium project source files and Supabase SQL scripts, accessed.</p></article></section>
-    <section id="members" class="content-section"><div class="section-head"><p class="eyebrow">02 / THE PEOPLE BEHIND IT</p><h2>Akagami's Crew</h2></div><div class="members-card"><div class="members-placeholder"><div class="mark">✦</div><h3>Team profiles coming soon</h3><p>This section is ready for the Team Akagami member profiles. Names, roles, and introductions can be added here later.</p></div></div></section>
-  </main>
+<section id="members" class="content-section">
+  <div class="section-head">
+    <p class="eyebrow">02 / crew</p>
+    <h2>Akagami's Crew</h2>
+  </div>
+  <div class="akagami-team-grid">
+    <article class="akagami-member-card">
+      <div class="akagami-member-photo"><img src="assets/team/member-1.jpg" alt="Member 1 profile photo" onerror="this.parentElement.classList.add('missing');this.remove()"><span class="photo-fallback">01</span></div>
+      <h3>Member 01</h3>
+      <div class="akagami-member-links"><span>GitHub<a href="https://github.com/USERNAME" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub profile">🔗</a></span><span>LinkedIn<a href="https://www.linkedin.com/in/USERNAME/" target="_blank" rel="noopener noreferrer" aria-label="Open LinkedIn profile">🔗</a></span></div>
+      <a class="akagami-member-email" href="mailto:uddish0605@gmail.com"><span class="mail-icon" aria-hidden="true">✉</span>uddish0605@gmail.com</a>
+    </article>
+    <article class="akagami-member-card">
+      <div class="akagami-member-photo"><img src="assets/team/member-2.jpg" alt="Member 2 profile photo" onerror="this.parentElement.classList.add('missing');this.remove()"><span class="photo-fallback">02</span></div>
+      <h3>Member 02</h3>
+      <div class="akagami-member-links"><span>GitHub<a href="https://github.com/USERNAME" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub profile">🔗</a></span><span>LinkedIn<a href="https://www.linkedin.com/in/USERNAME/" target="_blank" rel="noopener noreferrer" aria-label="Open LinkedIn profile">🔗</a></span></div>
+      <a class="akagami-member-email" href="mailto:rudrakshinisuresh@gmail.com"><span class="mail-icon" aria-hidden="true">✉</span>rudrakshinisuresh@gmail.com</a>
+    </article>
+    <article class="akagami-member-card">
+      <div class="akagami-member-photo"><img src="assets/team/member-3.jpg" alt="Member 3 profile photo" onerror="this.parentElement.classList.add('missing');this.remove()"><span class="photo-fallback">03</span></div>
+      <h3>Member 03</h3>
+      <div class="akagami-member-links"><span>GitHub<a href="https://github.com/USERNAME" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub profile">🔗</a></span><span>LinkedIn<a href="https://www.linkedin.com/in/USERNAME/" target="_blank" rel="noopener noreferrer" aria-label="Open LinkedIn profile">🔗</a></span></div>
+      <a class="akagami-member-email" href="mailto:jukantiaryan@gmail.com"><span class="mail-icon" aria-hidden="true">✉</span>jukantiaryan@gmail.com</a>
+    </article>
+  </div>
+</section>
+</main>
  
 </body>
 </html>
