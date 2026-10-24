@@ -145,9 +145,71 @@
     @media(max-width:900px) { .akagami-team-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
     @media(max-width:580px) { .akagami-team-grid { grid-template-columns: 1fr; } .akagami-member-card { min-height: 390px; } }
     @media(max-width:640px){.ta-nav{align-items:flex-start;flex-direction:column}.ta-links{gap:14px}.ta-hero{padding-top:42px}.report-card table{font-size:12px}}
-  </style>
+    html {
+  scroll-behavior: smooth;
+}
+
+    .team-footer {
+      border-top: 1px solid rgba(255,255,255,.13);
+      padding: 0 24px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .team-footer-inner {
+      position: relative;
+      max-width: 1100px;
+      min-height: 68px;
+      margin: 0 auto;
+      padding: 16px 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .team-footer-note {
+      margin: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-align: center;
+    }
+    .team-footer-note a {
+      color: #dc143c;
+      font-size: 16px;
+      line-height: 1;
+      text-decoration: none;
+    }
+    .team-footer-note a:hover { color: #ff536f; }
+    .back-to-top {
+      position: absolute;
+      top: 50%;
+      right: -8px;
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #dc143c;
+      font-size: 18px;
+      line-height: 1;
+      text-decoration: none;
+      transform: translateY(-50%);
+      transition: color .2s ease, transform .2s ease;
+    }
+    .back-to-top:hover {
+      color: #ff536f;
+      transform: translateY(calc(-50% - 2px));
+    }
+    @media(max-width:520px) {
+      .team-footer-inner { padding-right: 38px; padding-left: 8px; }
+      .team-footer-note { font-size: 11px; }
+    }
+</style>
 </head>
-<body>
+<body id="top">
   <header class="ta-header"><nav class="ta-nav" aria-label="Main navigation">
     <a class="ta-brand" href="index.html">ADA<span>MANTIUM</span></a>
     <div class="ta-links"><a class="back" href="index.html">The Doom ↗</a></div>
@@ -314,16 +376,13 @@
 </main>
  
 
-<footer style="border-top:1px solid rgba(255,255,255,.13); padding:22px 24px; color:var(--muted); font-size:12px;">
-  <div style="max-width:1100px; margin:auto; display:flex; justify-content:center; align-items:center; gap:9px; text-align:center;">
-    <span>This is the official GitHub repository for this project.</span>
-    <a
-      href="https://github.com/uddish-collab/adamantium-"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Open the official Adamantium GitHub repository"
-      style="color:#dc143c; text-decoration:none; font-size:17px;"
-    >🔗</a>
+<footer class="team-footer">
+  <div class="team-footer-inner">
+    <p class="team-footer-note">
+      <span>This is the official GitHub repository for this project.</span>
+      <a href="https://github.com/uddish-collab/adamantium-" target="_blank" rel="noopener noreferrer" aria-label="Open the official Adamantium GitHub repository">🔗</a>
+    </p>
+    <a class="back-to-top" href="#top" aria-label="Back to top">  ↑</a>
   </div>
 </footer>
 </body>
